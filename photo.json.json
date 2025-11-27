@@ -1,0 +1,364 @@
+{
+  "photos": [
+    {
+      "id": 1,
+      "title": "Аптека. г. Ойрот-Тура, 1930-е гг.",
+      "image_path": "images/Ulala/48.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 2,
+      "title": "Вид с горы Комсомолка",
+      "image_path": "images/Ulala/49.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 3,
+      "title": "Дом крестьянина, 1920 е гг.",
+      "image_path": "images/Ulala/50.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 4,
+      "title": "Лавка купца Хакина, начало 19 века",
+      "image_path": "images/Ulala/51.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 5,
+      "title": "Магазин Смычка",
+      "image_path": "images/Ulala/52.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 6,
+      "title": "Областной музей",
+      "image_path": "images/Ulala/53.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 7,
+      "title": "Село Улала 1926 год",
+      "image_path": "images/Ulala/54.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 8,
+      "title": "ул. Социалистическая, 30-е годы",
+      "image_path": "images/Ulala/55.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 9,
+      "title": "Улала, фото Сапожникова",
+      "image_path": "images/Ulala/56.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 10,
+      "title": "Улала",
+      "image_path": "images/Ulala/57.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 11,
+      "title": "Улалинский миссионерский стан в 1890-е гг",
+      "image_path": "images/Ulala/58.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 12,
+      "title": "Храм, 1874 год",
+      "image_path": "images/Ulala/59.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 13,
+      "title": "Улала, 1932 год",
+      "image_path": "images/Ulala/60.jpg",
+      "category": "Улала"
+    },
+    {
+      "id": 14,
+      "title": "Здание Ойротского облисполкома, 1930- е гг.",
+      "image_path": "images/Oyrot-Tura/33.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 15,
+      "title": "Зооветеринарный техникум, 1930-е гг.",
+      "image_path": "images/Oyrot-Tura/34.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 16,
+      "title": "Кирпичный завод",
+      "image_path": "images/Oyrot-Tura/35.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 17,
+      "title": "Магазин №10 по ул. Ленина, 1937-1938 гг.",
+      "image_path": "images/Oyrot-Tura/36.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 18,
+      "title": "Здание МВД, 1930-е гг.",
+      "image_path": "images/Oyrot-Tura/37.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 19,
+      "title": "Областная больница, 1947 г",
+      "image_path": "images/Oyrot-Tura/38.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 20,
+      "title": "Облисполком, 30-е гг.",
+      "image_path": "images/Oyrot-Tura/39.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 21,
+      "title": "Общежитие, 1930-е годы",
+      "image_path": "images/Oyrot-Tura/40.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 22,
+      "title": "Ойрот-Тура, 1932 г.",
+      "image_path": "images/Oyrot-Tura/41.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 23,
+      "title": "Ойрот-Тура, строительство",
+      "image_path": "images/Oyrot-Tura/42.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 24,
+      "title": "Первый сноп государству",
+      "image_path": "images/Oyrot-Tura/43.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 25,
+      "title": "Ойрот-Тура, 1930-е годы",
+      "image_path": "images/Oyrot-Tura/44.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 26,
+      "title": "Ойрот-Тура, 1947 г.",
+      "image_path": "images/Oyrot-Tura/45.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 27,
+      "title": "Ойроттуринцы в день празднования 10-летия Ойротской автономной области",
+      "image_path": "images/Oyrot-Tura/46.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 28,
+      "title": "Социалистическая улица",
+      "image_path": "images/Oyrot-Tura/47.jpg",
+      "category": "Ойрот-Тура"
+    },
+    {
+      "id": 61,
+      "title": "Быткомбинат, 1973 г.",
+      "image_path": "images/Gorno-Altaysk/1.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 62,
+      "title": "Гардино-тюлевая фабрика",
+      "image_path": "images/Gorno-Altaysk/2.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 63,
+      "title": "Горисполком",
+      "image_path": "images/Gorno-Altaysk/3.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 64,
+      "title": "Городской дом культуры, 1980 г.",
+      "image_path": "images/Gorno-Altaysk/4.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 65,
+      "title": "Кинотеатр Горький, 1989 г.",
+      "image_path": "images/Gorno-Altaysk/5.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 66,
+      "title": "Гостиница, 1970 г.",
+      "image_path": "images/Gorno-Altaysk/6.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 67,
+      "title": "Гостроном 17",
+      "image_path": "images/Gorno-Altaysk/7.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 68,
+      "title": "Дом быта, 1957 г.",
+      "image_path": "images/Gorno-Altaysk/8.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 69,
+      "title": "Дом ветеранов, 2002 г.",
+      "image_path": "images/Gorno-Altaysk/9.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 70,
+      "title": "Дом печати, 2003 г.",
+      "image_path": "images/Gorno-Altaysk/10.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 71,
+      "title": "Драматический театр",
+      "image_path": "images/Gorno-Altaysk/11.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 72,
+      "title": "Жилой дом, 1974 г.",
+      "image_path": "images/Gorno-Altaysk/12.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 73,
+      "title": "Завод ЖБИ",
+      "image_path": "images/Gorno-Altaysk/13.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 74,
+      "title": "Здание 1-ой городской музыкальной школы",
+      "image_path": "images/Gorno-Altaysk/14.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 75,
+      "title": "Здание мебельной фабрики",
+      "image_path": "images/Gorno-Altaysk/15.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 76,
+      "title": "Кинотеатр Горького в огне",
+      "image_path": "images/Gorno-Altaysk/16.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 77,
+      "title": "Мемориальный комплекс Парк Победы, 1980-е годы",
+      "image_path": "images/Gorno-Altaysk/17.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 78,
+      "title": "Национальный музей, 2003 г.",
+      "image_path": "images/Gorno-Altaysk/18.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 79,
+      "title": "Музыкальная школа №2, сдана в 1993 году",
+      "image_path": "images/Gorno-Altaysk/19.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 80,
+      "title": "Национальный банк",
+      "image_path": "images/Gorno-Altaysk/20.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 81,
+      "title": "Новое медицинское училище",
+      "image_path": "images/Gorno-Altaysk/21.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 82,
+      "title": "Областная библиотека",
+      "image_path": "images/Gorno-Altaysk/22.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 83,
+      "title": "Облисполком, 1954 г.",
+      "image_path": "images/Gorno-Altaysk/23.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 84,
+      "title": "Обувной магазин на площади им. В.И. Ленина, 1982 г.",
+      "image_path": "images/Gorno-Altaysk/24.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 85,
+      "title": "Педагогическое училище",
+      "image_path": "images/Gorno-Altaysk/25.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 86,
+      "title": "Пенсионный фонд, 2003 г.",
+      "image_path": "images/Gorno-Altaysk/26.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 87,
+      "title": "Первая 9-этажнка, 1992 г.",
+      "image_path": "images/Gorno-Altaysk/27.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 88,
+      "title": "Площадь Ленина",
+      "image_path": "images/Gorno-Altaysk/28.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 89,
+      "title": "Преображенский храм",
+      "image_path": "images/Gorno-Altaysk/29.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 90,
+      "title": "Стадион Спартак",
+      "image_path": "images/Gorno-Altaysk/30.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 91,
+      "title": "Старое медицинское училище",
+      "image_path": "images/Gorno-Altaysk/31.jpg",
+      "category": "Горно-Алтайск"
+    },
+    {
+      "id": 92,
+      "title": "Школа рабочей молодежи, 2002 г.",
+      "image_path": "images/Gorno-Altaysk/32.jpg",
+      "category": "Горно-Алтайск"
+    }
+  ]
+}

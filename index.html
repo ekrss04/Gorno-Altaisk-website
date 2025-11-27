@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горно-Алтайск - Исторические фотографии</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: #ffffff;
+        }
+        header {
+            position: relative;
+            height: 500px;
+            background: url('images/zagolovok.jpg') no-repeat center/cover;
+        }
+        .logo {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: auto;
+            max-width: 90%;
+        }
+        section {
+            margin: 15px;
+        }
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+            flex-wrap: wrap;
+        }
+        .text-block {
+            width: 450px; 
+            height: 300px;
+            background: rgb(231, 219, 202);
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 24px;
+            margin: 10px;
+            padding: 10px;
+        }
+        .image-block img {
+            width: 400px; 
+            height: 320px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .gallery img {
+            width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .description {
+            width: 45%;
+            background: #f0ebe4;
+            padding: 20px;
+            text-align: left;
+            margin: 20px;
+        }
+        .archive-title {
+            position: relative;
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .archive-title::before,
+        .archive-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 4px;
+            background: rgb(102, 61, 94);
+        }
+        .archive-title::before {
+            left: 0;
+        }
+        .archive-title::after {
+            right: 0;
+        }
+        iframe {
+            width: 100%;
+            min-height: 600px;
+            border: none;
+            display: block;
+            margin: 20px 0;
+        }
+        
+        /* Стили для галереи */
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 12px 24px;
+            background: rgb(102, 61, 94);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .category-btn:hover {
+            background: rgb(82, 41, 74);
+        }
+        
+        .category-btn.active {
+            background: rgb(41, 19, 120);
+        }
+        
+        .photo-card {
+            position: relative;
+            margin: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            margin: 0;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .text-block, .image-block img {
+                width: 90%;
+                height: auto;
+            }
+            .logo {
+                width: 90%;
+            }
+            .photo-card {
+                width: 90% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА САЙТА -->
+    <header>
+        <img src="images/logo.png" alt="Логотип Горно-Алтайска" class="logo">
+    </header>
+    
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="content-wrapper">
+        <section>
+            <div class="image-block">
+                <img src="images/nazvanie.png" alt="Название Горно-Алтайска">
+            </div>
+        </section>
+        <section>
+            <div class="text-block">
+                <p>Горно-Алтайск — столица Республики Алтай, основан в 1824 году. В 1948 году получил статус города и нынешнее название. Сегодня это культурный и экономический центр региона.</p>
+            </div>
+        </section>
+        <section>
+            <div class="image-block">
+                <img src="images/teatr.jpg" alt="Театр в Горно-Алтайске">
+            </div>
+        </section>
+    </div>
+
+    <!-- КАРТА -->
+    <section>
+        <h2 class="archive-title">4D карта Горно-Алтайска</h2>
+        <iframe src="kepler.gl.html" title="Интерактивная карта Горно-Алтайска"></iframe>
+    </section>
+   
+    <!-- АРХИВНЫЕ ФОТОГРАФИИ -->
+    <section>
+        <h2 class="archive-title">Архивные фотографии</h2>
+        
+        <div class="category-buttons">
+            <button class="category-btn active" onclick="filterPhotos('all')">Все фото</button>
+            <button class="category-btn" onclick="filterPhotos('Улала')">Улала</button>
+            <button class="category-btn" onclick="filterPhotos('Ойрот-Тура')">Ойрот-Тура</button>
+            <button class="category-btn" onclick="filterPhotos('Горно-Алтайск')">Горно-Алтайск</button>
+        </div>
+        
+        <div class="gallery" id="photoGallery">
+            <!-- Фотографии загружаются через JavaScript -->
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer style="background-color: rgb(255, 255, 255); padding: 30px 20px; text-align: center; font-size: 16px; color: #333;">
+        <h2 class="archive-title">Дополнительная информация</h2>
+        <p>Вы можете связаться с нами по следующей электронной почте:</p>
+        <p style="font-weight: bold; font-size: 16px; color: rgb(41, 19, 120);">Kristina.esipova.2003@mail.ru</p>
+        <p>Есипова Кристина Алексеевна, СГУГиТ</p>
+
+        <div style="margin-top: 40px;">
+            <h3 style="margin-bottom: 10px;">Источники информации</h3>
+            <ul style="list-style: none; padding: 0; font-size: 15px; line-height: 1.8;">
+                <li><a href="https://retromap.ru/14196816_z14_51.940449,85.973596" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Retromap</a></li>
+                <li><a href="https://nspd.gov.ru/map?thematic=PKK&zoom=13.506657226969194&coordinate_x=9567239.876719732&coordinate_y=6792123.834756714&theme_id=1&is_copy_url=true" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">НСПД | Геоинформационный портал</a></li>
+                <li><a href="https://vk.com/away.php?to=https%3A%2F%2Fkepler.gl%2Fdemo%2Fmap%3FmapUrl%3Dhttps%3A%2F%2Fdl.dropboxusercontent.com%2Fscl%2Ffi%2F4y07neztabm4yfm760rl5%2Fkeplergl_w4weq8q.json%3Frlkey%3Drbmbxklyimuc7t3mr0udn15rh%26dl%3D0&utf=1" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Карта на платформе Kepler.gl</a></li>
+            </ul>
+            <p style="margin-top: 30px; font-size: 18px;">Новосибирск, 2025 г.</p>
+        </div>
+    </footer>
+
+    <script>
+        let allPhotos = [];
+        
+        // Загрузка данных из JSON
+        async function loadPhotoData() {
+            try {
+                const response = await fetch('data/photos.json');
+                const data = await response.json();
+                allPhotos = data.photos;
+                displayPhotos(allPhotos);
+            } catch (error) {
+                console.error('Ошибка загрузки фотографий:', error);
+                document.getElementById('photoGallery').innerHTML = 
+                    '<p>Не удалось загрузить фотографии. Проверьте подключение к интернету.</p>';
+            }
+        }
+        
+        // Отображение фотографий
+        function displayPhotos(photos) {
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = '';
+            
+            photos.forEach(photo => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'photo-card';
+                photoCard.style.width = '400px';
+                
+                photoCard.innerHTML = `
+                    <img src="${photo.image_path}" 
+                         alt="${photo.title}" 
+                         style="width: 100%; height: 250px; object-fit: cover;"
+                         loading="lazy">
+                    <p class="photo-title">${photo.title}</p>
+                `;
+                
+                gallery.appendChild(photoCard);
+            });
+        }
+        
+        // Фильтрация по категориям
+        function filterPhotos(category) {
+            // Обновляем активную кнопку
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                displayPhotos(allPhotos);
+            } else {
+                const filteredPhotos = allPhotos.filter(photo => photo.category === category);
+                displayPhotos(filteredPhotos);
+            }
+        }
+        
+        // Загружаем данные при загрузке страницы
+        document.addEventListener('DOMContentLoaded', loadPhotoData);
+    </script>
+</body>
+</html>
