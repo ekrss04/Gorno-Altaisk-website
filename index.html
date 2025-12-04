@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Горно-Алтайск</title>
+    <title>Горно-Алтайск - Исторические фотографии</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,7 +35,6 @@
             padding: 0 10px;
         }
         
-        /* УМЕНЬШАЕМ РАЗМЕРЫ БЛОКОВ И ОТСТУПЫ */
         .content-wrapper {
             display: flex;
             justify-content: center;
@@ -47,7 +46,6 @@
             box-sizing: border-box;
         }
         
-        /* УМЕНЬШАЕМ БЛОКИ */
         .text-block {
             width: 350px;
             min-height: 280px;
@@ -95,14 +93,6 @@
         
         .gallery img:hover {
             transform: scale(1.05);
-        }
-        
-        .description {
-            width: 45%;
-            background: #f0ebe4;
-            padding: 20px;
-            text-align: left;
-            margin: 20px;
         }
         
         .archive-title {
@@ -159,7 +149,7 @@
         
         .attractions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
@@ -169,9 +159,12 @@
             border-radius: 12px;
             padding: 25px 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
             text-align: left;
             border-top: 5px solid;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
         
         .attraction-card:hover {
@@ -179,22 +172,15 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
         
+        .attraction-card.active {
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
         /* Цвета для разных категорий */
-        .category-1 {
-            border-color: #2e7d32; /* Зеленый для парков */
-        }
-        
-        .category-2 {
-            border-color: #1976d2; /* Синий для памятников */
-        }
-        
-        .category-3 {
-            border-color: #8e24aa; /* Фиолетовый для зданий */
-        }
-        
-        .category-4 {
-            border-color: #00acc1; /* Голубой для фонтанов */
-        }
+        .category-1 { border-color: #2e7d32; } /* Зеленый для парков */
+        .category-2 { border-color: #1976d2; } /* Синий для памятников */
+        .category-3 { border-color: #8e24aa; } /* Фиолетовый для зданий */
+        .category-4 { border-color: #00acc1; } /* Голубой для фонтанов */
         
         .attraction-card h3 {
             margin-top: 0;
@@ -203,29 +189,120 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .attraction-icon {
+            font-size: 20px;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+        
+        .attraction-card.active .attraction-icon {
+            transform: rotate(180deg);
         }
         
         .attraction-list {
             list-style: none;
             padding: 0;
             margin: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
         }
         
         .attraction-list li {
-            padding: 8px 0;
+            padding: 12px 0;
             border-bottom: 1px dashed #ddd;
             color: #555;
             font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .attraction-list li:hover {
+            background-color: rgba(0,0,0,0.02);
+            padding-left: 5px;
+            color: #333;
+        }
+        
+        .attraction-list li::after {
+            content: "›";
+            font-size: 18px;
+            color: #999;
+            margin-left: 10px;
         }
         
         .attraction-list li:last-child {
             border-bottom: none;
         }
         
-        .attraction-icon {
-            font-size: 24px;
-            margin-right: 10px;
-            vertical-align: middle;
+        /* Стили для раскрывающегося контента */
+        .attraction-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .attraction-detail.active {
+            max-height: 1000px;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        
+        .detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .detail-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .detail-description {
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .category-1 .detail-description { border-left-color: #2e7d32; }
+        .category-2 .detail-description { border-left-color: #1976d2; }
+        .category-3 .detail-description { border-left-color: #8e24aa; }
+        .category-4 .detail-description { border-left-color: #00acc1; }
+        
+        .close-detail {
+            align-self: flex-end;
+            padding: 8px 20px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .close-detail:hover {
+            background: #444;
         }
         
         .category-buttons {
@@ -305,7 +382,7 @@
             }
             
             .attractions-grid {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: 20px;
             }
         }
@@ -384,6 +461,10 @@
                 font-size: 15px;
             }
             
+            .detail-image {
+                height: 200px;
+            }
+            
             .archive-title {
                 font-size: 20px;
                 margin: 40px 0;
@@ -418,61 +499,6 @@
             .photo-card {
                 width: 95% !important;
                 margin: 15px auto;
-            }
-        }
-        
-        /* Для очень маленьких экранов */
-        @media (max-width: 480px) {
-            .text-block {
-                font-size: 16px;
-                width: 98% !important;
-            }
-            
-            .image-block img {
-                height: 200px;
-            }
-            
-            .archive-title::before {
-                right: calc(50% + 50px);
-            }
-            
-            .archive-title::after {
-                left: calc(50% + 50px);
-            }
-            
-            .archive-title span {
-                font-size: 16px;
-                padding: 0 8px;
-            }
-        }
-        
-        /* Для горизонтальной ориентации на мобильных */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .content-wrapper {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-around;
-            }
-            
-            .text-block, .image-block {
-                width: 48% !important;
-                min-height: 220px;
-            }
-            
-            .image-block img {
-                height: 220px;
-            }
-            
-            .attractions-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .archive-title::before {
-                right: calc(50% + 40px);
-            }
-            
-            .archive-title::after {
-                left: calc(50% + 40px);
             }
         }
     </style>
@@ -512,58 +538,8 @@
     <section class="attractions-section">
         <h2 class="archive-title"><span>Достопримечательности Горно-Алтайска</span></h2>
         
-        <div class="attractions-grid">
-            <!-- Скверы и парки -->
-            <div class="attraction-card category-1">
-                <h3>🌳 Скверы и парки</h3>
-                <ul class="attraction-list">
-                    <li>Парк Победы</li>
-                    <li>Центральный городской парк</li>
-                    <li>Сквер имени Ленина</li>
-                    <li>Сквер у Национального театра</li>
-                    <li>Парк культуры и отдыха</li>
-                    <li>Сквер Строителей</li>
-                </ul>
-            </div>
-            
-            <!-- Памятники и декоративные объекты -->
-            <div class="attraction-card category-2">
-                <h3>🗿 Памятники и декоративные объекты</h3>
-                <ul class="attraction-list">
-                    <li>Памятник В.И. Ленину</li>
-                    <li>Монумент "Горно-Алтайск - столица Республики Алтай"</li>
-                    <li>Памятник воинам-интернационалистам</li>
-                    <li>Скульптура "Алтайская принцесса" (копия)</li>
-                    <li>Памятник первым строителям</li>
-                    <li>Декоративная композиция "Горные козлы"</li>
-                </ul>
-            </div>
-            
-            <!-- Культурные и исторически значимые здания -->
-            <div class="attraction-card category-3">
-                <h3>🏛️ Культурные и исторические здания</h3>
-                <ul class="attraction-list">
-                    <li>Национальный музей им. А.В. Анохина</li>
-                    <li>Национальный драматический театр</li>
-                    <li>Горно-Алтайский государственный университет</li>
-                    <li>Православная церковь Преображения Господня</li>
-                    <li>Здание администрации Республики Алтай</li>
-                    <li>Дом культуры "Космос"</li>
-                </ul>
-            </div>
-            
-            <!-- Фонтаны и родники -->
-            <div class="attraction-card category-4">
-                <h3>⛲ Фонтаны и родники</h3>
-                <ul class="attraction-list">
-                    <li>Фонтан в Центральном парке</li>
-                    <li>Фонтан на площади Ленина</li>
-                    <li>Родник "Святой источник"</li>
-                    <li>Фонтан у Национального музея</li>
-                    <li>Декоративный фонтан на Коммунистическом проспекте</li>
-                    <li>Родник "Горный ключ"</li>
-                </ul>
-            </div>
+        <div class="attractions-grid" id="attractionsGrid">
+            <!-- Карточки будут созданы через JavaScript -->
         </div>
     </section>
    
@@ -602,9 +578,164 @@
     </footer>
 
     <script>
+        // Данные достопримечательностей
+        const attractionsData = {
+            categories: [
+                {
+                    id: 1,
+                    title: "Скверы и парки",
+                    colorClass: "category-1",
+                    items: [
+                        {
+                            name: "Парк Победы",
+                            image: "images/Sights/park_pobedy.jpg",
+                            description: "Парк, посвященный победе в Великой Отечественной войне. Здесь установлен мемориал павшим воинам, проводятся памятные мероприятия."
+                        },
+                        {
+                            name: "Центральный городской парк",
+                            image: "images/Sights/central_park.jpg",
+                            description: "Главный парк города с пешеходными аллеями, детскими площадками и зонами отдыха. Любимое место прогулок горожан."
+                        },
+                        {
+                            name: "Сквер имени Ленина",
+                            image: "images/Sights/lenin_square.jpg",
+                            description: "Исторический сквер в центре города с памятником В.И. Ленину. Вокруг сквера расположены административные здания."
+                        },
+                        {
+                            name: "Сквер у Национального театра",
+                            image: "images/Sights/theater_square.jpg",
+                            description: "Благоустроенный сквер перед Национальным драматическим театром. Здесь часто проходят культурные мероприятия."
+                        },
+                        {
+                            name: "Парк культуры и отдыха",
+                            image: "images/Sights/culture_park.jpg",
+                            description: "Парк с аттракционами, спортивными площадками и зонами для пикников. Популярное место семейного отдыха."
+                        },
+                        {
+                            name: "Сквер Строителей",
+                            image: "images/Sights/builders_square.jpg",
+                            description: "Сквер, посвященный строителям Горно-Алтайска. Украшен декоративными композициями и малыми архитектурными формами."
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Памятники и декоративные объекты",
+                    colorClass: "category-2",
+                    items: [
+                        {
+                            name: "Памятник В.И. Ленину",
+                            image: "images/Sights/lenin_monument.jpg",
+                            description: "Бронзовый памятник основателю советского государства, установленный в центральном сквере города."
+                        },
+                        {
+                            name: "Монумент 'Горно-Алтайск - столица Республики Алтай'",
+                            image: "images/Sights/city_monument.jpg",
+                            description: "Современный монумент, символизирующий статус Горно-Алтайска как столицы республики."
+                        },
+                        {
+                            name: "Памятник воинам-интернационалистам",
+                            image: "images/Sights/warriors_monument.jpg",
+                            description: "Мемориал воинам, погибшим в локальных конфликтах. Место проведения памятных церемоний."
+                        },
+                        {
+                            name: "Скульптура 'Алтайская принцесса'",
+                            image: "images/Sights/princess_sculpture.jpg",
+                            description: "Копия знаменитой Пазырыкской принцессы - археологической находки с плато Укок."
+                        },
+                        {
+                            name: "Памятник первым строителям",
+                            image: "images/Sights/builders_monument.jpg",
+                            description: "Памятник, посвященный первостроителям города. Символизирует труд и преданность своему делу."
+                        },
+                        {
+                            name: "Декоративная композиция 'Горные козлы'",
+                            image: "images/Sights/goats_sculpture.jpg",
+                            description: "Художественная композиция, изображающая горных козлов - символ Алтайских гор."
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Культурные и исторические здания",
+                    colorClass: "category-3",
+                    items: [
+                        {
+                            name: "Национальный музей им. А.В. Анохина",
+                            image: "images/Sights/anokhin_museum.jpg",
+                            description: "Крупнейший музей Республики Алтай, хранящий уникальные археологические и этнографические коллекции."
+                        },
+                        {
+                            name: "Национальный драматический театр",
+                            image: "images/Sights/national_theater.jpg",
+                            description: "Главная театральная площадка республики, где ставятся спектакли на алтайском и русском языках."
+                        },
+                        {
+                            name: "Горно-Алтайский государственный университет",
+                            image: "images/Sights/university.jpg",
+                            description: "Ведущее высшее учебное заведение республики. Архитектурный комплекс включает несколько корпусов."
+                        },
+                        {
+                            name: "Православная церковь Преображения Господня",
+                            image: "images/Sights/church.jpg",
+                            description: "Действующий православный храм, построенный в традиционном русском стиле. Центр духовной жизни города."
+                        },
+                        {
+                            name: "Здание администрации Республики Алтай",
+                            image: "images/Sights/administration.jpg",
+                            description: "Архитектурный комплекс, где размещаются органы власти республики. Здание отличается монументальностью."
+                        },
+                        {
+                            name: "Дом культуры 'Космос'",
+                            image: "images/Sights/cosmos_palace.jpg",
+                            description: "Культурный центр, построенный в советское время. Здесь проходят концерты, выставки и другие мероприятия."
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "Фонтаны и родники",
+                    colorClass: "category-4",
+                    items: [
+                        {
+                            name: "Фонтан в Центральном парке",
+                            image: "images/Sights/central_fountain.jpg",
+                            description: "Крупный светомузыкальный фонтан, который особенно красив в вечернее время с подсветкой."
+                        },
+                        {
+                            name: "Фонтан на площади Ленина",
+                            image: "images/Sights/lenin_fountain.jpg",
+                            description: "Классический фонтан в центре города, окруженный цветочными клумбами и скамейками для отдыха."
+                        },
+                        {
+                            name: "Родник 'Святой источник'",
+                            image: "images/Sights/holy_spring.jpg",
+                            description: "Природный родник с чистой горной водой. Местные жители считают воду целебной."
+                        },
+                        {
+                            name: "Фонтан у Национального музея",
+                            image: "images/Sights/museum_fountain.jpg",
+                            description: "Современный фонтан перед зданием музея, украшенный декоративными элементами в алтайском стиле."
+                        },
+                        {
+                            name: "Декоративный фонтан на Коммунистическом проспекте",
+                            image: "images/Sights/prospect_fountain.jpg",
+                            description: "Небольшой фонтан на главной улице города, создающий приятную прохладу в жаркие дни."
+                        },
+                        {
+                            name: "Родник 'Горный ключ'",
+                            image: "images/Sights/mountain_spring.jpg",
+                            description: "Естественный источник в черте города, оборудованный для удобного забора воды. Популярен среди горожан."
+                        }
+                    ]
+                }
+            ]
+        };
+
         let allPhotos = [];
-        
-        // Загрузка данных из JSON
+        let activeDetail = null;
+
+        // Загрузка данных из JSON для архивных фото
         async function loadPhotoData() {
             try {
                 const response = await fetch('data/photos.json');
@@ -617,21 +748,177 @@
                     '<p>Не удалось загрузить фотографии. Проверьте подключение к интернету.</p>';
             }
         }
-        
-        // Отображение фотографий
+
+        // Создание карточек достопримечательностей
+        function createAttractionCards() {
+            const grid = document.getElementById('attractionsGrid');
+            grid.innerHTML = '';
+
+            attractionsData.categories.forEach(category => {
+                const card = document.createElement('div');
+                card.className = `attraction-card ${category.colorClass}`;
+                card.dataset.categoryId = category.id;
+
+                // Создаем список достопримечательностей
+                let itemsList = '';
+                category.items.forEach((item, index) => {
+                    itemsList += `
+                        <li data-category-id="${category.id}" data-item-index="${index}">
+                            ${item.name}
+                        </li>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <h3>
+                        ${category.title}
+                        <span class="attraction-icon">▼</span>
+                    </h3>
+                    <ul class="attraction-list">
+                        ${itemsList}
+                    </ul>
+                    <div class="attraction-detail" id="detail-${category.id}">
+                        <!-- Детальная информация будет загружена при клике -->
+                    </div>
+                `;
+
+                grid.appendChild(card);
+
+                // Добавляем обработчики для элементов списка
+                const listItems = card.querySelectorAll('.attraction-list li');
+                listItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const categoryId = parseInt(item.dataset.categoryId);
+                        const itemIndex = parseInt(item.dataset.itemIndex);
+                        showAttractionDetail(categoryId, itemIndex);
+                    });
+                });
+
+                // Обработчик для раскрытия/закрытия списка
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.attraction-list li') && !e.target.closest('.close-detail')) {
+                        toggleCategoryList(card);
+                    }
+                });
+            });
+        }
+
+        // Переключение отображения списка категории
+        function toggleCategoryList(card) {
+            const isActive = card.classList.contains('active');
+            
+            // Закрываем все остальные карточки
+            document.querySelectorAll('.attraction-card').forEach(c => {
+                c.classList.remove('active');
+                const detail = c.querySelector('.attraction-detail');
+                if (detail) {
+                    detail.classList.remove('active');
+                    detail.innerHTML = '';
+                }
+            });
+
+            // Открываем/закрываем текущую
+            if (!isActive) {
+                card.classList.add('active');
+            }
+            
+            activeDetail = null;
+        }
+
+        // Показать детальную информацию о достопримечательности
+        function showAttractionDetail(categoryId, itemIndex) {
+            const category = attractionsData.categories.find(c => c.id === categoryId);
+            if (!category || !category.items[itemIndex]) return;
+
+            const item = category.items[itemIndex];
+            
+            // Закрываем предыдущую детальную информацию
+            if (activeDetail) {
+                const prevDetail = document.getElementById(`detail-${activeDetail.categoryId}`);
+                if (prevDetail) {
+                    prevDetail.classList.remove('active');
+                    prevDetail.innerHTML = '';
+                }
+            }
+
+            // Находим карточку категории
+            const card = document.querySelector(`.attraction-card[data-category-id="${categoryId}"]`);
+            if (!card) return;
+
+            // Показываем карточку как активную
+            document.querySelectorAll('.attraction-card').forEach(c => {
+                c.classList.remove('active');
+            });
+            card.classList.add('active');
+
+            // Находим контейнер для деталей
+            const detailContainer = document.getElementById(`detail-${categoryId}`);
+            if (!detailContainer) return;
+
+            // Создаем контент для детальной информации
+            detailContainer.innerHTML = `
+                <div class="detail-content">
+                    <img src="${item.image}" alt="${item.name}" class="detail-image" 
+                         onerror="this.src='images/default_sight.jpg'">
+                    <div class="detail-description">
+                        <h4>${item.name}</h4>
+                        <p>${item.description}</p>
+                    </div>
+                    <button class="close-detail" onclick="closeAttractionDetail(${categoryId})">
+                        Закрыть
+                    </button>
+                </div>
+            `;
+
+            // Показываем с анимацией
+            setTimeout(() => {
+                detailContainer.classList.add('active');
+            }, 10);
+
+            // Сохраняем активную деталь
+            activeDetail = { categoryId, itemIndex };
+
+            // Прокручиваем к детальной информации
+            detailContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Закрыть детальную информацию
+        function closeAttractionDetail(categoryId) {
+            const detailContainer = document.getElementById(`detail-${categoryId}`);
+            if (detailContainer) {
+                detailContainer.classList.remove('active');
+                setTimeout(() => {
+                    detailContainer.innerHTML = '';
+                }, 500);
+            }
+
+            const card = document.querySelector(`.attraction-card[data-category-id="${categoryId}"]`);
+            if (card) {
+                card.classList.remove('active');
+            }
+
+            activeDetail = null;
+        }
+
+        // Отображение фотографий для архивного раздела
         function displayPhotos(photos) {
             const gallery = document.getElementById('photoGallery');
             gallery.innerHTML = '';
             
+            const isMobile = window.innerWidth <= 768;
+            const cardWidth = isMobile ? '95%' : '400px';
+            const imgHeight = isMobile ? '200px' : '250px';
+            
             photos.forEach(photo => {
                 const photoCard = document.createElement('div');
                 photoCard.className = 'photo-card';
-                photoCard.style.width = '400px';
+                photoCard.style.width = cardWidth;
                 
                 photoCard.innerHTML = `
                     <img src="${photo.image_path}" 
                          alt="${photo.title}" 
-                         style="width: 100%; height: 250px; object-fit: cover;"
+                         style="width: 100%; height: ${imgHeight}; object-fit: cover;"
                          loading="lazy">
                     <p class="photo-title">${photo.title}</p>
                 `;
@@ -639,10 +926,9 @@
                 gallery.appendChild(photoCard);
             });
         }
-        
-        // Фильтрация по категориям
+
+        // Фильтрация по категориям для архивных фото
         function filterPhotos(category) {
-            // Обновляем активную кнопку
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -655,12 +941,18 @@
                 displayPhotos(filteredPhotos);
             }
         }
-        
-        // Загружаем данные при загрузке страницы
-        document.addEventListener('DOMContentLoaded', loadPhotoData);
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPhotoData();
+            createAttractionCards();
+        });
     </script>
 </body>
 </html>
+
+
+
 
 
 
