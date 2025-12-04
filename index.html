@@ -11,7 +11,7 @@
         padding: 0;
         text-align: center;
         background: #ffffff;
-        overflow-x: hidden; /* Предотвращаем горизонтальный скролл */
+        overflow-x: hidden;
     }
     
     header {
@@ -32,15 +32,19 @@
     
     section {
         margin: 15px;
-        padding: 0 10px; /* Добавляем отступы по бокам */
+        padding: 0 10px;
     }
     
+    /* ОСНОВНОЕ ИСПРАВЛЕНИЕ: На компьютере три блока в ряд */
     .content-wrapper {
         display: flex;
         justify-content: center;
+        align-items: center;
         font-size: 30px;
-        flex-wrap: wrap;
-        gap: 15px; /* Добавляем отступы между элементами */
+        flex-wrap: nowrap; /* Не переносим на новую строку */
+        gap: 15px;
+        margin: 0 auto;
+        max-width: 1400px; /* Ограничиваем максимальную ширину */
     }
     
     .text-block {
@@ -53,9 +57,9 @@
         flex-direction: column;
         justify-content: center;
         font-size: 24px;
-        margin: 10px;
-        padding: 20px; /* Увеличиваем внутренние отступы */
-        box-sizing: border-box; /* Чтобы padding не ломал ширину */
+        padding: 20px;
+        box-sizing: border-box;
+        flex-shrink: 0; /* Не сжимаем блоки */
     }
     
     .image-block img {
@@ -63,7 +67,7 @@
         height: 320px;
         object-fit: cover;
         border-radius: 10px;
-        margin: 10px;
+        flex-shrink: 0; /* Не сжимаем изображения */
     }
     
     .gallery {
@@ -94,12 +98,21 @@
         margin: 20px;
     }
     
+    /* ИСПРАВЛЕНИЕ: Добавляем отступы для текста на мобильных */
     .archive-title {
         position: relative;
         text-align: center;
         font-size: 24px;
-        margin: 20px 0;
-        padding: 0 10px;
+        margin: 30px 0; /* Увеличиваем отступы */
+        padding: 0 20px; /* Добавляем отступы по бокам */
+        box-sizing: border-box;
+    }
+    
+    .archive-title span {
+        background-color: white; /* Фон для текста */
+        padding: 0 15px; /* Отступы вокруг текста */
+        position: relative;
+        z-index: 1; /* Текст над линиями */
     }
     
     .archive-title::before,
@@ -107,17 +120,20 @@
         content: "";
         position: absolute;
         top: 50%;
-        width: 30%;
+        transform: translateY(-50%);
         height: 4px;
         background: rgb(102, 61, 94);
+        z-index: 0; /* Линии под текстом */
     }
     
     .archive-title::before {
         left: 0;
+        right: calc(50% + 70px); /* Отступ от текста справа */
     }
     
     .archive-title::after {
         right: 0;
+        left: calc(50% + 70px); /* Отступ от текста слева */
     }
     
     iframe {
@@ -188,187 +204,121 @@
     }
     
     /* Адаптивность для планшетов */
-    @media (max-width: 1024px) {
-        header {
-            height: 400px;
-        }
-        
-        .logo {
-            width: 80%;
-            top: 80px;
-        }
-        
-        .text-block {
-            width: 90%;
-            font-size: 20px;
-            min-height: 250px;
-        }
-        
-        .image-block img {
-            width: 90%;
-            height: auto;
-            max-height: 300px;
-        }
-        
+    @media (max-width: 1200px) {
         .content-wrapper {
-            flex-direction: column;
-            align-items: center;
+            flex-wrap: wrap; /* Разрешаем перенос на планшетах */
+            max-width: 900px;
+        }
+        
+        .text-block, .image-block img {
+            width: 45%; /* Два блока в ряд на планшетах */
+            min-width: 300px;
         }
         
         .photo-card {
             width: 45% !important;
-            margin: 10px;
-        }
-        
-        iframe {
-            min-height: 500px;
         }
     }
     
     /* Адаптивность для мобильных телефонов */
     @media (max-width: 768px) {
-        header {
-            height: 300px;
+        .content-wrapper {
+            flex-direction: column; /* Вертикальное расположение на мобильных */
+            flex-wrap: nowrap;
+            gap: 20px;
         }
         
-        .logo {
-            top: 60px;
-            width: 90%;
-        }
-        
-        .text-block {
-            width: 95%;
-            font-size: 18px;
-            min-height: auto;
-            padding: 15px;
-            margin: 5px;
+        .text-block, .image-block img {
+            width: 95% !important; /* Полная ширина на мобильных */
+            max-width: 500px;
+            min-width: unset;
+            margin: 0 auto; /* Центрируем */
         }
         
         .image-block img {
-            width: 95%;
-            max-height: 250px;
-            margin: 5px;
+            height: 250px; /* Фиксированная высота для мобильных */
         }
         
-        .content-wrapper {
-            gap: 10px;
+        .text-block {
+            font-size: 18px;
+            min-height: auto;
+            padding: 15px;
         }
         
+        /* ИСПРАВЛЕНИЕ: Увеличиваем отступы для линий на мобильных */
         .archive-title {
             font-size: 20px;
-            margin: 15px 0;
+            margin: 40px 0; /* Больше отступов сверху и снизу */
+            padding: 0 15px;
         }
         
-        .archive-title::before,
+        .archive-title span {
+            padding: 0 10px;
+            font-size: 18px;
+        }
+        
+        /* Увеличиваем отступ линий от текста на мобильных */
+        .archive-title::before {
+            right: calc(50% + 60px);
+        }
+        
         .archive-title::after {
-            width: 25%; /* Уменьшаем линии на мобильных */
+            left: calc(50% + 60px);
+        }
+        
+        /* Для очень длинных заголовков на мобильных */
+        @media (max-width: 480px) {
+            .archive-title::before {
+                right: calc(50% + 50px);
+            }
+            
+            .archive-title::after {
+                left: calc(50% + 50px);
+            }
+            
+            .archive-title span {
+                font-size: 16px;
+                padding: 0 8px;
+            }
         }
         
         .category-buttons {
             flex-direction: column;
             align-items: center;
+            margin: 30px 0; /* Увеличиваем отступы */
         }
         
         .category-btn {
             width: 90%;
             max-width: 250px;
-            margin: 5px 0;
+            margin: 8px 0;
         }
         
         .photo-card {
             width: 95% !important;
-            margin: 10px auto;
-        }
-        
-        .photo-title {
-            font-size: 13px;
-            padding: 8px;
-        }
-        
-        iframe {
-            min-height: 400px;
-        }
-        
-        footer {
-            padding: 20px 10px;
-        }
-        
-        footer h2.archive-title {
-            font-size: 18px;
-        }
-        
-        footer p {
-            font-size: 14px;
-        }
-        
-        footer ul {
-            font-size: 13px;
-        }
-        
-        footer h3 {
-            font-size: 16px;
-        }
-    }
-    
-    /* Адаптивность для очень маленьких экранов */
-    @media (max-width: 480px) {
-        header {
-            height: 250px;
-        }
-        
-        .logo {
-            top: 50px;
-        }
-        
-        .text-block {
-            font-size: 16px;
-            padding: 12px;
-        }
-        
-        .image-block img {
-            max-height: 200px;
-        }
-        
-        .archive-title {
-            font-size: 18px;
-        }
-        
-        .archive-title::before,
-        .archive-title::after {
-            width: 20%; /* Еще меньше линии на очень маленьких экранах */
-        }
-        
-        iframe {
-            min-height: 350px;
-        }
-        
-        .gallery img {
-            height: 200px; /* Уменьшаем высоту картинок */
-        }
-        
-        .photo-card {
-            margin: 8px auto;
-        }
-        
-        footer {
-            font-size: 14px;
+            margin: 15px auto;
         }
     }
     
     /* Для горизонтальной ориентации на мобильных */
     @media (max-width: 768px) and (orientation: landscape) {
-        header {
-            height: 350px;
-        }
-        
         .content-wrapper {
             flex-direction: row;
             flex-wrap: wrap;
+            justify-content: space-around;
         }
         
         .text-block, .image-block img {
-            width: 48%;
-            max-height: 200px;
+            width: 48% !important;
+            min-height: 250px;
+        }
+        
+        .archive-title::before {
+            right: calc(50% + 40px);
+        }
+        
+        .archive-title::after {
+            left: calc(50% + 40px);
         }
     }
 </style>
