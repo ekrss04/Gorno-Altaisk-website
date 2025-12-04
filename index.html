@@ -35,39 +35,49 @@
         padding: 0 10px;
     }
     
-    /* ОСНОВНОЕ ИСПРАВЛЕНИЕ: На компьютере три блока в ряд */
+    /* ИСПРАВЛЕННЫЙ КОНТЕЙНЕР - ТРИ БЛОКА В РЯД */
     .content-wrapper {
         display: flex;
         justify-content: center;
-        align-items: center;
-        font-size: 30px;
-        flex-wrap: nowrap; /* Не переносим на новую строку */
-        gap: 15px;
+        align-items: stretch; /* Выравниваем по высоте */
+        gap: 20px;
         margin: 0 auto;
-        max-width: 1400px; /* Ограничиваем максимальную ширину */
+        max-width: 1400px;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
     
+    /* МЕНЯЕМ ШИРИНУ НА ПРОЦЕНТЫ */
     .text-block {
-        width: 450px; 
-        min-height: 300px;
+        flex: 1; /* Гибкий размер */
+        min-width: 300px; /* Минимальная ширина */
+        max-width: 450px; /* Максимальная ширина */
+        min-height: 320px;
         background: rgb(231, 219, 202);
         border-radius: 10px;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        font-size: 24px;
-        padding: 20px;
+        font-size: 22px; /* Немного уменьшаем шрифт */
+        padding: 15px;
         box-sizing: border-box;
-        flex-shrink: 0; /* Не сжимаем блоки */
+    }
+    
+    .image-block {
+        flex: 1; /* Гибкий размер */
+        min-width: 300px; /* Минимальная ширина */
+        max-width: 400px; /* Максимальная ширина */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .image-block img {
-        width: 400px; 
+        width: 100%; /* Занимает всю ширину контейнера */
         height: 320px;
         object-fit: cover;
         border-radius: 10px;
-        flex-shrink: 0; /* Не сжимаем изображения */
     }
     
     .gallery {
@@ -98,21 +108,20 @@
         margin: 20px;
     }
     
-    /* ИСПРАВЛЕНИЕ: Добавляем отступы для текста на мобильных */
     .archive-title {
         position: relative;
         text-align: center;
         font-size: 24px;
-        margin: 30px 0; /* Увеличиваем отступы */
-        padding: 0 20px; /* Добавляем отступы по бокам */
+        margin: 30px 0;
+        padding: 0 20px;
         box-sizing: border-box;
     }
     
     .archive-title span {
-        background-color: white; /* Фон для текста */
-        padding: 0 15px; /* Отступы вокруг текста */
+        background-color: white;
+        padding: 0 15px;
         position: relative;
-        z-index: 1; /* Текст над линиями */
+        z-index: 1;
     }
     
     .archive-title::before,
@@ -123,17 +132,17 @@
         transform: translateY(-50%);
         height: 4px;
         background: rgb(102, 61, 94);
-        z-index: 0; /* Линии под текстом */
+        z-index: 0;
     }
     
     .archive-title::before {
         left: 0;
-        right: calc(50% + 70px); /* Отступ от текста справа */
+        right: calc(50% + 70px);
     }
     
     .archive-title::after {
         right: 0;
-        left: calc(50% + 70px); /* Отступ от текста слева */
+        left: calc(50% + 70px);
     }
     
     iframe {
@@ -144,7 +153,6 @@
         margin: 20px 0;
     }
     
-    /* Стили для галереи */
     .category-buttons {
         display: flex;
         justify-content: center;
@@ -203,16 +211,36 @@
         text-align: center;
     }
     
-    /* Адаптивность для планшетов */
-    @media (max-width: 1200px) {
+    /* Адаптивность для средних экранов (ноутбуки) */
+    @media (max-width: 1400px) {
         .content-wrapper {
-            flex-wrap: wrap; /* Разрешаем перенос на планшетах */
-            max-width: 900px;
+            max-width: 1200px;
+            padding: 0 15px;
         }
         
-        .text-block, .image-block img {
-            width: 45%; /* Два блока в ряд на планшетах */
+        .text-block {
+            font-size: 20px;
+            min-height: 300px;
+            padding: 12px;
+        }
+        
+        .image-block img {
+            height: 300px;
+        }
+    }
+    
+    /* Адаптивность для планшетов (переход на 2 колонки) */
+    @media (max-width: 1024px) {
+        .content-wrapper {
+            flex-wrap: wrap; /* Разрешаем перенос */
+            justify-content: space-around;
+            gap: 15px;
+        }
+        
+        .text-block, .image-block {
+            flex: 0 0 calc(50% - 20px); /* 2 блока в ряд */
             min-width: 300px;
+            max-width: 400px;
         }
         
         .photo-card {
@@ -223,20 +251,19 @@
     /* Адаптивность для мобильных телефонов */
     @media (max-width: 768px) {
         .content-wrapper {
-            flex-direction: column; /* Вертикальное расположение на мобильных */
-            flex-wrap: nowrap;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
         }
         
-        .text-block, .image-block img {
-            width: 95% !important; /* Полная ширина на мобильных */
+        .text-block, .image-block {
+            width: 95% !important;
             max-width: 500px;
             min-width: unset;
-            margin: 0 auto; /* Центрируем */
         }
         
         .image-block img {
-            height: 250px; /* Фиксированная высота для мобильных */
+            height: 250px;
         }
         
         .text-block {
@@ -245,10 +272,9 @@
             padding: 15px;
         }
         
-        /* ИСПРАВЛЕНИЕ: Увеличиваем отступы для линий на мобильных */
         .archive-title {
             font-size: 20px;
-            margin: 40px 0; /* Больше отступов сверху и снизу */
+            margin: 40px 0;
             padding: 0 15px;
         }
         
@@ -257,7 +283,6 @@
             font-size: 18px;
         }
         
-        /* Увеличиваем отступ линий от текста на мобильных */
         .archive-title::before {
             right: calc(50% + 60px);
         }
@@ -266,26 +291,10 @@
             left: calc(50% + 60px);
         }
         
-        /* Для очень длинных заголовков на мобильных */
-        @media (max-width: 480px) {
-            .archive-title::before {
-                right: calc(50% + 50px);
-            }
-            
-            .archive-title::after {
-                left: calc(50% + 50px);
-            }
-            
-            .archive-title span {
-                font-size: 16px;
-                padding: 0 8px;
-            }
-        }
-        
         .category-buttons {
             flex-direction: column;
             align-items: center;
-            margin: 30px 0; /* Увеличиваем отступы */
+            margin: 30px 0;
         }
         
         .category-btn {
@@ -300,6 +309,30 @@
         }
     }
     
+    /* Для очень маленьких экранов */
+    @media (max-width: 480px) {
+        .text-block {
+            font-size: 16px;
+        }
+        
+        .image-block img {
+            height: 200px;
+        }
+        
+        .archive-title::before {
+            right: calc(50% + 50px);
+        }
+        
+        .archive-title::after {
+            left: calc(50% + 50px);
+        }
+        
+        .archive-title span {
+            font-size: 16px;
+            padding: 0 8px;
+        }
+    }
+    
     /* Для горизонтальной ориентации на мобильных */
     @media (max-width: 768px) and (orientation: landscape) {
         .content-wrapper {
@@ -308,8 +341,8 @@
             justify-content: space-around;
         }
         
-        .text-block, .image-block img {
-            width: 48% !important;
+        .text-block, .image-block {
+            flex: 0 0 calc(48% - 10px);
             min-height: 250px;
         }
         
@@ -448,4 +481,5 @@
     </script>
 </body>
 </html>
+
 
