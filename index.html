@@ -262,7 +262,7 @@
         .detail-content {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         
         .detail-image {
@@ -273,21 +273,21 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        .detail-description {
-            text-align: left;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #444;
-            padding: 15px;
+        .detail-caption {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            padding: 10px;
             background: #f8f8f8;
             border-radius: 8px;
             border-left: 4px solid;
         }
         
-        .category-1 .detail-description { border-left-color: #2e7d32; }
-        .category-2 .detail-description { border-left-color: #1976d2; }
-        .category-3 .detail-description { border-left-color: #8e24aa; }
-        .category-4 .detail-description { border-left-color: #00acc1; }
+        .category-1 .detail-caption { border-left-color: #2e7d32; }
+        .category-2 .detail-caption { border-left-color: #1976d2; }
+        .category-3 .detail-caption { border-left-color: #8e24aa; }
+        .category-4 .detail-caption { border-left-color: #00acc1; }
         
         .close-detail {
             align-self: flex-end;
@@ -578,149 +578,136 @@
     </footer>
 
     <script>
-       // Данные достопримечательностей (обновленный раздел для скверов и парков)
-const attractionsData = {
-    categories: [
-        {
-            id: 1,
-            title: "Скверы и парки",
-            colorClass: "category-1",
-            items: [
-                {
-                    name: "Парк Победы",
-                    image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.1.jpg",
-                    description: "Мемориальный парк с Вечным огнем и памятниками героям Великой Отечественной войны. Здесь проходят торжественные мероприятия, а в мирное время — это тихое место для прогулок среди аллей и цветников."
-                },
-                {
-                    name: "Центральный сквер",
-                    image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.2.jpg",
-                    description: "Сердце города с уютными скамейками и тенистыми аллеями. Любимое место встреч горожан и отдыха в жаркие дни. Здесь часто проводятся городские праздники и ярмарки."
-                },
-                {
-                    name: "Городской парк культуры и отдыха",
-                    image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.3.jpg",
-                    description: "Главный развлекательный парк города с аттракционами для детей и взрослых, летними кафе и концертными площадками. Идеальное место для семейного досуга."
-                },
-                {
-                    name: "Сквер камней",
-                    image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.4.jpg",
-                    description: "Уникальное пространство с каменными композициями, отражающими древнюю культуру Алтая. Сквер украшен валунами с петроглифами и информационными стендами о геологии региона."
-                }
-            ]
-        },
-        {
-            id: 2,
-            title: "Памятники и декоративные объекты",
-            colorClass: "category-2",
-            items: [
-                {
-                    name: "Памятник В.И. Ленину",
-                    image: "images/Sights/lenin_monument.jpg",
-                    description: "Бронзовый памятник основателю советского государства, установленный в центральном сквере города."
-                },
-                {
-                    name: "Монумент 'Горно-Алтайск - столица Республики Алтай'",
-                    image: "images/Sights/city_monument.jpg",
-                    description: "Современный монумент, символизирующий статус Горно-Алтайска как столицы республики."
-                },
-                {
-                    name: "Памятник воинам-интернационалистам",
-                    image: "images/Sights/warriors_monument.jpg",
-                    description: "Мемориал воинам, погибшим в локальных конфликтах. Место проведения памятных церемоний."
-                },
-                {
-                    name: "Скульптура 'Алтайская принцесса'",
-                    image: "images/Sights/princess_sculpture.jpg",
-                    description: "Копия знаменитой Пазырыкской принцессы - археологической находки с плато Укок."
-                },
-                {
-                    name: "Памятник первым строителям",
-                    image: "images/Sights/builders_monument.jpg",
-                    description: "Памятник, посвященный первостроителям города. Символизирует труд и преданность своему делу."
-                },
-                {
-                    name: "Декоративная композиция 'Горные козлы'",
-                    image: "images/Sights/goats_sculpture.jpg",
-                    description: "Художественная композиция, изображающая горных козлов - символ Алтайских гор."
-                }
-            ]
-        },
-        {
-            id: 3,
-            title: "Культурные и исторические здания",
-            colorClass: "category-3",
-            items: [
-                {
-                    name: "Национальный музей им. А.В. Анохина",
-                    image: "images/Sights/anokhin_museum.jpg",
-                    description: "Крупнейший музей Республики Алтай, хранящий уникальные археологические и этнографические коллекции."
-                },
-                {
-                    name: "Национальный драматический театр",
-                    image: "images/Sights/national_theater.jpg",
-                    description: "Главная театральная площадка республики, где ставятся спектакли на алтайском и русском языках."
-                },
-                {
-                    name: "Горно-Алтайский государственный университет",
-                    image: "images/Sights/university.jpg",
-                    description: "Ведущее высшее учебное заведение республики. Архитектурный комплекс включает несколько корпусов."
-                },
-                {
-                    name: "Православная церковь Преображения Господня",
-                    image: "images/Sights/church.jpg",
-                    description: "Действующий православный храм, построенный в традиционном русском стиле. Центр духовной жизни города."
-                },
-                {
-                    name: "Здание администрации Республики Алтай",
-                    image: "images/Sights/administration.jpg",
-                    description: "Архитектурный комплекс, где размещаются органы власти республики. Здание отличается монументальностью."
-                },
-                {
-                    name: "Дом культуры 'Космос'",
-                    image: "images/Sights/cosmos_palace.jpg",
-                    description: "Культурный центр, построенный в советское время. Здесь проходят концерты, выставки и другие мероприятия."
-                }
-            ]
-        },
-        {
-            id: 4,
-            title: "Фонтаны и родники",
-            colorClass: "category-4",
-            items: [
-                {
-                    name: "Фонтан в Центральном парке",
-                    image: "images/Sights/central_fountain.jpg",
-                    description: "Крупный светомузыкальный фонтан, который особенно красив в вечернее время с подсветкой."
-                },
-                {
-                    name: "Фонтан на площади Ленина",
-                    image: "images/Sights/lenin_fountain.jpg",
-                    description: "Классический фонтан в центре города, окруженный цветочными клумбами и скамейками для отдыха."
-                },
-                {
-                    name: "Родник 'Святой источник'",
-                    image: "images/Sights/holy_spring.jpg",
-                    description: "Природный родник с чистой горной водой. Местные жители считают воду целебной."
-                },
-                {
-                    name: "Фонтан у Национального музея",
-                    image: "images/Sights/museum_fountain.jpg",
-                    description: "Современный фонтан перед зданием музея, украшенный декоративными элементами в алтайском стиле."
-                },
-                {
-                    name: "Декоративный фонтан на Коммунистическом проспекте",
-                    image: "images/Sights/prospect_fountain.jpg",
-                    description: "Небольшой фонтан на главной улице города, создающий приятную прохладу в жаркие дни."
-                },
-                {
-                    name: "Родник 'Горный ключ'",
-                    image: "images/Sights/mountain_spring.jpg",
-                    description: "Естественный источник в черте города, оборудованный для удобного забора воды. Популярен среди горожан."
-                }
-            ]
+        // Функция для преобразования ссылок GitHub в прямые ссылки на изображения
+        function getRawGitHubUrl(url) {
+            if (url.includes('github.com') && url.includes('/blob/')) {
+                return url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+            }
+            return url;
         }
-    ]
-};
+
+        // Данные достопримечательностей
+        const attractionsData = {
+            categories: [
+                {
+                    id: 1,
+                    title: "Скверы и парки",
+                    colorClass: "category-1",
+                    items: [
+                        {
+                            name: "Парк Победы",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.1.jpg"
+                        },
+                        {
+                            name: "Центральный сквер",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.2.jpg"
+                        },
+                        {
+                            name: "Городской парк культуры и отдыха",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.3.jpg"
+                        },
+                        {
+                            name: "Сквер камней",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.4.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Памятники и декоративные объекты",
+                    colorClass: "category-2",
+                    items: [
+                        {
+                            name: "Памятник В.И. Ленину",
+                            image: "images/Sights/lenin_monument.jpg"
+                        },
+                        {
+                            name: "Монумент 'Горно-Алтайск - столица Республики Алтай'",
+                            image: "images/Sights/city_monument.jpg"
+                        },
+                        {
+                            name: "Памятник воинам-интернационалистам",
+                            image: "images/Sights/warriors_monument.jpg"
+                        },
+                        {
+                            name: "Скульптура 'Алтайская принцесса'",
+                            image: "images/Sights/princess_sculpture.jpg"
+                        },
+                        {
+                            name: "Памятник первым строителям",
+                            image: "images/Sights/builders_monument.jpg"
+                        },
+                        {
+                            name: "Декоративная композиция 'Горные козлы'",
+                            image: "images/Sights/goats_sculpture.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Культурные и исторические здания",
+                    colorClass: "category-3",
+                    items: [
+                        {
+                            name: "Национальный музей им. А.В. Анохина",
+                            image: "images/Sights/anokhin_museum.jpg"
+                        },
+                        {
+                            name: "Национальный драматический театр",
+                            image: "images/Sights/national_theater.jpg"
+                        },
+                        {
+                            name: "Горно-Алтайский государственный университет",
+                            image: "images/Sights/university.jpg"
+                        },
+                        {
+                            name: "Православная церковь Преображения Господня",
+                            image: "images/Sights/church.jpg"
+                        },
+                        {
+                            name: "Здание администрации Республики Алтай",
+                            image: "images/Sights/administration.jpg"
+                        },
+                        {
+                            name: "Дом культуры 'Космос'",
+                            image: "images/Sights/cosmos_palace.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "Фонтаны и родники",
+                    colorClass: "category-4",
+                    items: [
+                        {
+                            name: "Фонтан в Центральном парке",
+                            image: "images/Sights/central_fountain.jpg"
+                        },
+                        {
+                            name: "Фонтан на площади Ленина",
+                            image: "images/Sights/lenin_fountain.jpg"
+                        },
+                        {
+                            name: "Родник 'Святой источник'",
+                            image: "images/Sights/holy_spring.jpg"
+                        },
+                        {
+                            name: "Фонтан у Национального музея",
+                            image: "images/Sights/museum_fountain.jpg"
+                        },
+                        {
+                            name: "Декоративный фонтан на Коммунистическом проспекте",
+                            image: "images/Sights/prospect_fountain.jpg"
+                        },
+                        {
+                            name: "Родник 'Горный ключ'",
+                            image: "images/Sights/mountain_spring.jpg"
+                        }
+                    ]
+                }
+            ]
+        };
+
         let allPhotos = [];
         let activeDetail = null;
 
@@ -845,14 +832,16 @@ const attractionsData = {
             const detailContainer = document.getElementById(`detail-${categoryId}`);
             if (!detailContainer) return;
 
-            // Создаем контент для детальной информации
+            // Преобразуем ссылку на изображение для GitHub
+            const imageUrl = getRawGitHubUrl(item.image);
+
+            // Создаем контент для детальной информации (только фото и подпись)
             detailContainer.innerHTML = `
                 <div class="detail-content">
-                    <img src="${item.image}" alt="${item.name}" class="detail-image" 
+                    <img src="${imageUrl}" alt="${item.name}" class="detail-image" 
                          onerror="this.src='images/default_sight.jpg'">
-                    <div class="detail-description">
-                        <h4>${item.name}</h4>
-                        <p>${item.description}</p>
+                    <div class="detail-caption ${category.colorClass}">
+                        ${item.name}
                     </div>
                     <button class="close-detail" onclick="closeAttractionDetail(${categoryId})">
                         Закрыть
@@ -905,7 +894,7 @@ const attractionsData = {
                 photoCard.style.width = cardWidth;
                 
                 photoCard.innerHTML = `
-                    <img src="${photo.image_path}" 
+                    <img src="${getRawGitHubUrl(photo.image_path)}" 
                          alt="${photo.title}" 
                          style="width: 100%; height: ${imgHeight}; object-fit: cover;"
                          loading="lazy">
@@ -939,9 +928,3 @@ const attractionsData = {
     </script>
 </body>
 </html>
-
-
-
-
-
-
