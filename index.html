@@ -165,6 +165,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            height: fit-content;
         }
         
         .attraction-card:hover {
@@ -208,7 +209,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            max-height: 300px;
+            max-height: 380px; /* Увеличено для 6 элементов */
             overflow-y: auto;
             transition: all 0.3s ease;
         }
@@ -385,6 +386,10 @@
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: 20px;
             }
+            
+            .attraction-list {
+                max-height: 350px;
+            }
         }
         
         /* Для экранов меньше 1000px */
@@ -413,6 +418,10 @@
             
             .attractions-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .attraction-list {
+                max-height: 320px;
             }
         }
         
@@ -459,6 +468,10 @@
             
             .attraction-list li {
                 font-size: 15px;
+            }
+            
+            .attraction-list {
+                max-height: 300px;
             }
             
             .detail-image {
@@ -569,6 +582,7 @@
         <div style="margin-top: 40px;">
             <h3 style="margin-bottom: 10px;">Источники информации</h3>
             <ul style="list-style: none; padding: 0; font-size: 15px; line-height: 1.8;">
+                <li><a href="https://gornoaltaysk.ru/" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Официальный портал муниципального образования "город Горно-Алтайск"</a></li>
                 <li><a href="https://retromap.ru/14196816_z14_51.940449,85.973596" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Retromap</a></li>
                 <li><a href="https://nspd.gov.ru/map?thematic=PKK&zoom=13.506657226969194&coordinate_x=9567239.876719732&coordinate_y=6792123.834756714&theme_id=1&is_copy_url=true" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">НСПД | Геоинформационный портал</a></li>
                 <li><a href="https://vk.com/away.php?to=https%3A%2F%2Fkepler.gl%2Fdemo%2Fmap%3FmapUrl%3Dhttps%3A%2F%2Fdl.dropboxusercontent.com%2Fscl%2Ffi%2F4y07neztabm4yfm760rl5%2Fkeplergl_w4weq8q.json%3Frlkey%3Drbmbxklyimuc7t3mr0udn15rh%26dl%3D0&utf=1" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Карта на платформе Kepler.gl</a></li>
@@ -609,99 +623,91 @@
                         {
                             name: "Сквер камней",
                             image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.4.jpg"
+                        },
+                        {
+                            name: "Городской панорамный парк «Гора Туугая»",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.5.jpg"
+                        },
+                        {
+                            name: "Сквер имени Г.И. Чорос-Гуркина",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.6.jpg"
                         }
                     ]
                 },
                 {
                     id: 2,
-                    title: "Памятники и декоративные объекты",
+                    title: "Памятники",
                     colorClass: "category-2",
                     items: [
                         {
+                            name: "Памятник труженикам тыла и детям Великой Отечественной войны",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.1.jpg"
+                        },
+                        {
                             name: "Памятник В.И. Ленину",
-                            image: "images/Sights/lenin_monument.jpg"
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.2.jpg"
                         },
                         {
-                            name: "Монумент 'Горно-Алтайск - столица Республики Алтай'",
-                            image: "images/Sights/city_monument.jpg"
+                            name: "Памятник Г.И. Чорос-Гуркину",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.3.jpg"
                         },
                         {
-                            name: "Памятник воинам-интернационалистам",
-                            image: "images/Sights/warriors_monument.jpg"
+                            name: "Памятник В.И. Чаптынову",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.4.jpg"
                         },
                         {
-                            name: "Скульптура 'Алтайская принцесса'",
-                            image: "images/Sights/princess_sculpture.jpg"
+                            name: "Памятник борцам за власть Советов",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.5.jpg"
                         },
                         {
-                            name: "Памятник первым строителям",
-                            image: "images/Sights/builders_monument.jpg"
-                        },
-                        {
-                            name: "Декоративная композиция 'Горные козлы'",
-                            image: "images/Sights/goats_sculpture.jpg"
+                            name: "Памятник пограничникам всех поколений",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.6.jpg"
                         }
                     ]
                 },
                 {
                     id: 3,
-                    title: "Культурные и исторические здания",
+                    title: "Исторические здания",
                     colorClass: "category-3",
                     items: [
                         {
-                            name: "Национальный музей им. А.В. Анохина",
-                            image: "images/Sights/anokhin_museum.jpg"
+                            name: "Купеческий дом Бодунова",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.1.jpg"
                         },
                         {
-                            name: "Национальный драматический театр",
-                            image: "images/Sights/national_theater.jpg"
+                            name: "Лавка купца Тобокова",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.2.jpg"
                         },
                         {
-                            name: "Горно-Алтайский государственный университет",
-                            image: "images/Sights/university.jpg"
+                            name: "Мужская церковно-приходская школа",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.3.jpg"
                         },
                         {
-                            name: "Православная церковь Преображения Господня",
-                            image: "images/Sights/church.jpg"
+                            name: "Магазин купца Хакина",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.4.jpg"
                         },
                         {
-                            name: "Здание администрации Республики Алтай",
-                            image: "images/Sights/administration.jpg"
-                        },
-                        {
-                            name: "Дом культуры 'Космос'",
-                            image: "images/Sights/cosmos_palace.jpg"
+                            name: "Усадьба купца Бодунова",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.5.jpg"
                         }
                     ]
                 },
                 {
                     id: 4,
-                    title: "Фонтаны и родники",
+                    title: "Родники",
                     colorClass: "category-4",
                     items: [
                         {
-                            name: "Фонтан в Центральном парке",
-                            image: "images/Sights/central_fountain.jpg"
+                            name: "Центральный родник",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/4.1.jpg"
                         },
                         {
-                            name: "Фонтан на площади Ленина",
-                            image: "images/Sights/lenin_fountain.jpg"
+                            name: "Родник «Ырысту и Аленушка»",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/4.2.jpg"
                         },
                         {
-                            name: "Родник 'Святой источник'",
-                            image: "images/Sights/holy_spring.jpg"
-                        },
-                        {
-                            name: "Фонтан у Национального музея",
-                            image: "images/Sights/museum_fountain.jpg"
-                        },
-                        {
-                            name: "Декоративный фонтан на Коммунистическом проспекте",
-                            image: "images/Sights/prospect_fountain.jpg"
-                        },
-                        {
-                            name: "Родник 'Горный ключ'",
-                            image: "images/Sights/mountain_spring.jpg"
+                            name: "Родник на ул. Рабочей",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/4.3.jpg"
                         }
                     ]
                 }
