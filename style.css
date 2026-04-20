@@ -382,6 +382,23 @@ html, body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Анимация для раскрытия списков */
+#section-purpose,
+#section-decade,
+#section-floors {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Стиль для квадратных переключателей */
+.class-checkbox {
+  transition: all 0.2s ease;
+}
+
+.class-checkbox:hover {
+  transform: scale(1.1);
+  border-color: #1a73e8;
+}
+
 .period-modal .modal-image:hover {
   transform: scale(1.05);
   border-color: rgba(66, 133, 244, 0.7);
@@ -641,33 +658,64 @@ html, body {
 }
 
 /* ========== МЕДИА-ЗАПРОСЫ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ========== */
+/* Планшеты (до 1024px) - небольшая адаптация */
+@media (max-width: 1024px) {
+  .period-modal {
+    width: 90%;
+    max-width: 620px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    max-height: 80vh;
+  }
+
+  .modal-content {
+    padding: 13px 30px 25px 30px;
+  }
+}
 /* Смартфоны (до 768px) */
 @media (max-width: 768px) {
-  /* Увеличиваем плеер в 1.5 раза */
-  #customPlayer {
-    bottom: 160px;
-    left: 10px;
-    width: 194px;
-    /* 129 * 1.5 */
-    height: 51px;
-    /* 34 * 1.5 */
-  }
-
-  /* Увеличиваем кнопки UI (оставляем вверху справа) */
+  /* Панель с иконками - растягиваем на всю ширину вверху */
   #ui {
-    top: 10px;
-    right: 10px;
-    gap: 12px;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0;
+    background: rgba(30, 30, 30, 0.85);
+    padding: 8px 0;
+    backdrop-filter: blur(5px);
   }
 
+  /* Иконки становятся крупнее и равномерно распределяются */
   .ui-btn {
-    width: 48px;
-    height: 48px;
-    background-size: 48px 48px;
+    width: 50px;
+    height: 50px;
+    background-size: 35px 35px;
+    margin: 0;
+    border-radius: 12px;
   }
 
-  /* Делаем таймлайн прокручиваемым */
+  /* Увеличиваем плеер */
+  #customPlayer {
+    bottom: 150px;
+    left: 10px;
+    width: 200px;
+    height: 48px;
+  }
+
+  /* Увеличиваем область контейнера карты */
+  #cesiumContainer {
+    height: calc(100% - 66px);
+  }
+
+  /* Таймлайн выше и прокручиваемый */
   #timelineContainer {
+    bottom: 45px;
+    height: 38px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -688,25 +736,36 @@ html, body {
   }
 
   #timelineSVG {
-    min-width: 400px;
+    min-width: 500px;
+    height: 100%;
   }
 
-  /* Модальные окна адаптируем под экран */
+  /* Обертка для кнопок периодов */
+  .timeline-wrapper {
+    display: inline-block;
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  /* Модальные окна на весь экран */
   .period-modal {
-    width: 90%;
-    max-width: 620px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: auto;
-    max-height: 80vh;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+    transform: none;
+    max-height: 90vh;
   }
 
   .modal-content {
-    padding: 13px 30px 25px 30px;
+    padding: 10px 20px 20px 20px;
   }
 
   .modal-title {
     font-size: 20px;
+    padding-right: 30px;
   }
 
   .modal-description {
@@ -759,32 +818,32 @@ html, body {
 }
 /* Маленькие смартфоны (до 480px) */
 @media (max-width: 480px) {
-  /* Плеер ещё немного увеличиваем */
-  #customPlayer {
-    bottom: 140px;
-    width: 210px;
-    height: 55px;
-  }
-
-  /* Кнопки UI */
+  /* Панель иконок */
   .ui-btn {
-    width: 54px;
-    height: 54px;
-    background-size: 54px 54px;
+    width: 60px;
+    height: 60px;
+    background-size: 40px 40px;
   }
 
-  /* Таймлайн выше */
+  /* Плеер ещё крупнее */
+  #customPlayer {
+    bottom: 130px;
+    width: 220px;
+    height: 54px;
+  }
+
+  /* Таймлайн */
   #timelineContainer {
-    height: 40px;
-    bottom: 45px;
+    height: 42px;
+    bottom: 38px;
   }
 
   #mapTitleContainer {
-    height: 40px;
+    height: 38px;
   }
 
   #cesiumContainer {
-    height: calc(100% - 74px);
+    height: calc(100% - 76px);
   }
 
   .modal-title {
@@ -808,23 +867,36 @@ html, body {
     right: 15px;
     font-size: 24px;
   }
+
+  .images-grid {
+    gap: 4px;
+  }
+
+  .image-caption {
+    font-size: 8px;
+  }
 }
 /* Ландшафтная ориентация на телефонах */
 @media (max-width: 768px) and (orientation: landscape) {
-  #customPlayer {
-    bottom: 100px;
-    width: 160px;
-    height: 42px;
+  #ui {
+    padding: 4px 0;
   }
 
   .ui-btn {
-    width: 40px;
+    width: 44px;
+    height: 44px;
+    background-size: 30px 30px;
+  }
+
+  #customPlayer {
+    bottom: 90px;
+    width: 180px;
     height: 40px;
-    background-size: 40px 40px;
   }
 
   #timelineContainer {
-    bottom: 30px;
+    bottom: 25px;
+    height: 32px;
   }
 
   .period-modal {
@@ -835,7 +907,7 @@ html, body {
     max-height: 200px;
   }
 }
-/* Отключаем hover-эффекты на тач-устройствах */
+/* Отключаем hover-эффекты на тач-устройствах для лучшей производительности */
 @media (hover: none) and (pointer: coarse) {
   .player-btn:hover {
     background: transparent;
