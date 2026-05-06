@@ -1,192 +1,1131 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
+<html lang="ru">
+<head>
     <meta charset="UTF-8">
-    <title>4D карта</title>
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/cesium@1.115.0/Build/Cesium/Widgets/widgets.css'><link rel="stylesheet" href="./style.css">
-
-  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горно-Алтайск - Исторические фотографии</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        header {
+            position: relative;
+            height: 500px;
+            background: url('images/zagolovok.jpg') no-repeat center/cover;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: auto;
+            max-width: 90%;
+        }
+        
+        section {
+            margin: 15px;
+            padding: 0 10px;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 15px;
+            margin: 0 auto;
+            max-width: 1400px; /* Увеличено с 1200px */
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+        
+        .text-block {
+            width: 400px; /* Увеличено с 350px */
+            min-height: 300px; /* Увеличено с 280px */
+            background: rgb(231, 219, 202);
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 20px;
+            padding: 15px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        
+        .image-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-block img {
+            width: 380px; /* Увеличено с 330px */
+            height: 300px; /* Увеличено с 280px */
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .gallery img {
+            width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        
+        .archive-title {
+            position: relative;
+            text-align: center;
+            font-size: 24px;
+            margin: 30px 0;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        .archive-title span {
+            background-color: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .archive-title::before,
+        .archive-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4px;
+            background: rgb(102, 61, 94);
+            z-index: 0;
+        }
+        
+        .archive-title::before {
+            left: 0;
+            right: calc(50% + 70px);
+        }
+        
+        .archive-title::after {
+            right: 0;
+            left: calc(50% + 70px);
+        }
+        
+        iframe {
+            width: 100%;
+            min-height: 600px;
+            border: none;
+            display: block;
+            margin: 20px 0;
+        }
+        
+        /* Стили для достопримечательностей */
+        .attractions-section {
+            margin: 40px auto;
+            max-width: 1400px; /* Увеличено с 1200px */
+            padding: 0 20px;
+        }
+        
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Увеличено с 280px */
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .attraction-card {
+            background: #f9f5f0;
+            border-radius: 12px;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-align: left;
+            border-top: 5px solid;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            height: fit-content;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .attraction-card.active {
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        /* Цвета для разных категорий */
+        .category-1 { border-color: #2e7d32; } /* Зеленый для парков */
+        .category-2 { border-color: #1976d2; } /* Синий для памятников */
+        .category-3 { border-color: #8e24aa; } /* Фиолетовый для зданий */
+        .category-4 { border-color: #00acc1; } /* Голубой для родников */
+        
+        .attraction-card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .attraction-icon {
+            font-size: 20px;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+        
+        .attraction-card.active .attraction-icon {
+            transform: rotate(180deg);
+        }
+        
+        .attraction-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px; /* Увеличено для 6 элементов */
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .attraction-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed #ddd;
+            color: #555;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .attraction-list li:hover {
+            background-color: rgba(0,0,0,0.02);
+            padding-left: 5px;
+            color: #333;
+        }
+        
+        .attraction-list li::after {
+            content: "›";
+            font-size: 18px;
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .attraction-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Стили для раскрывающегося контента */
+        .attraction-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .attraction-detail.active {
+            max-height: 1000px;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        
+        .detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .detail-image {
+            width: 100%;
+            height: 280px; /* Увеличено с 250px */
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .detail-image:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+        
+        .detail-caption {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            border-left: 4px solid;
+            cursor: pointer;
+        }
+        
+        .detail-caption:hover {
+            background: #f0f0f0;
+        }
+        
+        .category-1 .detail-caption { border-left-color: #2e7d32; }
+        .category-2 .detail-caption { border-left-color: #1976d2; }
+        .category-3 .detail-caption { border-left-color: #8e24aa; }
+        .category-4 .detail-caption { border-left-color: #00acc1; }
+        
+        .close-detail {
+            align-self: flex-end;
+            padding: 8px 20px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .close-detail:hover {
+            background: #444;
+        }
+        
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: rgb(102, 61, 94);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            flex: 1;
+            min-width: 120px;
+            margin: 5px;
+        }
+        
+        .category-btn:hover {
+            background: rgb(82, 41, 74);
+        }
+        
+        .category-btn.active {
+            background: rgb(41, 19, 120);
+        }
+        
+        .photo-card {
+            position: relative;
+            margin: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            width: 400px;
+            cursor: pointer;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            margin: 0;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+            margin-top: 5vh;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            animation: zoom 0.3s;
+        }
+        
+        @keyframes zoom {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-caption {
+            margin: 15px auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+            transform: scale(1.1);
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 20px;
+            transition: 0.3s;
+            user-select: none;
+            z-index: 1001;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .modal-nav:hover {
+            color: #ddd;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .modal-prev {
+            left: 20px;
+        }
+        
+        .modal-next {
+            right: 20px;
+        }
+        
+        /* Для экранов меньше 1100px */
+        @media (max-width: 1100px) {
+            .content-wrapper {
+                gap: 10px;
+            }
+            
+            .text-block {
+                width: 350px;
+                font-size: 18px;
+                min-height: 280px;
+                padding: 12px;
+            }
+            
+            .image-block img {
+                width: 330px;
+                height: 280px;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            .attraction-list {
+                max-height: 380px;
+            }
+        }
+        
+        /* Для экранов меньше 1000px */
+        @media (max-width: 1000px) {
+            .content-wrapper {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .text-block {
+                width: 45%;
+                max-width: 350px;
+                min-height: 250px;
+            }
+            
+            .image-block {
+                width: 45%;
+                max-width: 330px;
+            }
+            
+            .image-block img {
+                width: 100%;
+                height: 250px;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .attraction-list {
+                max-height: 350px;
+            }
+        }
+        
+        /* Адаптивность для мобильных телефонов */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .text-block {
+                width: 95% !important;
+                max-width: 500px;
+                min-height: auto;
+            }
+            
+            .image-block {
+                width: 95% !important;
+                max-width: 500px;
+            }
+            
+            .image-block img {
+                height: 250px;
+            }
+            
+            .text-block {
+                font-size: 18px;
+                padding: 15px;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .attraction-card {
+                padding: 20px 15px;
+            }
+            
+            .attraction-card h3 {
+                font-size: 18px;
+            }
+            
+            .attraction-list li {
+                font-size: 15px;
+            }
+            
+            .attraction-list {
+                max-height: 300px;
+            }
+            
+            .detail-image {
+                height: 200px;
+            }
+            
+            .archive-title {
+                font-size: 20px;
+                margin: 40px 0;
+                padding: 0 15px;
+            }
+            
+            .archive-title span {
+                padding: 0 10px;
+                font-size: 18px;
+            }
+            
+            .archive-title::before {
+                right: calc(50% + 60px);
+            }
+            
+            .archive-title::after {
+                left: calc(50% + 60px);
+            }
+            
+            .category-buttons {
+                flex-direction: column;
+                align-items: center;
+                margin: 30px 0;
+            }
+            
+            .category-btn {
+                width: 90%;
+                max-width: 250px;
+                margin: 8px 0;
+            }
+            
+            .photo-card {
+                width: 95% !important;
+                margin: 15px auto;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                max-height: 70vh;
+            }
+            
+            .modal-nav {
+                font-size: 40px;
+                padding: 10px;
+            }
+            
+            .close-modal {
+                top: 10px;
+                right: 20px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА САЙТА -->
+    <header>
+        <img src="images/logo.png" alt="Логотип Горно-Алтайска" class="logo">
+    </header>
     
-  <body>
-  <div id="cesiumContainer"></div>
-
-<!-- Подключаем внешний JS файл -->
-<script src="https://cdn.jsdelivr.net/gh/ekrss04/Data-/cityNames.js"></script>
-
-<div id="customPlayer">
-  <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/player.svg" id="playerSVG">
-  <div class="player-btn pause" data-action="pause"></div>
-  <div class="player-btn play" data-action="play"></div>
-  <div class="player-btn fast" data-action="fast"></div>
-  <div class="player-btn end" data-action="today"></div>
-</div>
-
-<div id="timelineContainer">
-  <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/title_2.svg" 
-       alt="Таймлайн периодов" 
-       id="timelineSVG">
-  <div class="period-btn" data-year="1850" title="Алтайское селение (1850)"></div>
-  <div class="period-btn" data-year="1921" title="Купеческий период (1921)"></div>
-  <div class="period-btn" data-year="1991" title="Советский период (1991)"></div>
-  <div class="period-btn" data-year="2027" title="Современный город (2027)"></div>
-</div>
-
-<div id="mapTitleContainer">
-  <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/title_new.svg" alt="Название карты">
-</div>
-
-<div id="ui">
-  <div id="btnGeocoder" class="ui-btn"></div>
-  <div id="btnHome" class="ui-btn"></div>
-  <div id="btnLayers" class="ui-btn"></div>
-  <div id="btnWalk" class="ui-btn"></div>
-</div>
-
-<!-- ОКНА ИСТОРИЧЕСКИХ ПЕРИОДОВ -->
-<div id="modalAltai" class="period-modal">
-  <div class="modal-bg-wrapper">
-    <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/history.svg" alt="Фон модального окна" class="modal-bg">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h3 class="modal-title">Алтайское селение</h3>
-      <div class="modal-description">
-        <p>Горно-Алтайск ведёт свою историю с 1824 года, когда было основано село Улала на месте слияния рек Улалушки и Маймы. Первыми поселенцами стали крестьяне Бийского уезда и представители коренного населения Алтая. В 1828 году в Улалу прибыла Алтайская духовная миссия, оказавшая значительное влияние на развитие поселения. С 1834 по 1879 год Улала являлась её административным и духовным центром. В этот период были построены храмы, часовни и Никольский женский монастырь. В 1838 году открылась первая миссионерская школа, положившая начало развитию системы образования. В 1867 году было создано Миссионерское центральное училище. Население Улалы формировалось преимущественно из новокрещёных алтайцев, получавших государственную поддержку. В поселении была открыта первая больница, обеспечивавшая медицинскую помощь и социальную защиту. В совокупности эти процессы заложили основы социально-культурного и административного развития будущего города.</p>
-      </div>
-      <div class="images-grid">
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/1.1.jpg?raw=true" alt="Мужская и женская церковно-приходские школы" class="modal-image">
-          <div class="image-caption">Мужская и женская церковно-приходские школы</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/1.2.jpg?raw=true" alt="Мужская церковно-приходская школа" class="modal-image">
-          <div class="image-caption">Мужская церковно-приходская школа</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/1.3.jpg?raw=true" alt="с. Улала в начале XX века" class="modal-image">
-          <div class="image-caption">с. Улала в начале XX века</div>
-        </div>
-      </div>
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="content-wrapper">
+        <section>
+            <div class="image-block">
+                <img src="images/nazvanie.png" alt="Название Горно-Алтайска">
+            </div>
+        </section>
+        <section>
+            <div class="text-block">
+                <p>Горно-Алтайск — столица Республики Алтай, основан в 1824 году. В 1948 году получил статус города и нынешнее название. Сегодня это культурный и экономический центр региона.</p>
+            </div>
+        </section>
+        <section>
+            <div class="image-block">
+                <img src="images/teatr.jpg" alt="Театр в Горно-Алтайске">
+            </div>
+        </section>
     </div>
-  </div>
-</div>
 
-<div id="modalMerchant" class="period-modal">
-  <div class="modal-bg-wrapper">
-    <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/history.svg" alt="Фон модального окна" class="modal-bg">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h3 class="modal-title">Купеческий период</h3>
-      <div class="modal-description">
-        <p>Во второй половине XIX — начале XX века село Улала, ныне город Горно-Алтайск, переживало период активного экономического и культурного развития благодаря купечеству. В это время здесь строились каменные дома, торговые лавки, склады и мастерские. Известные купцы Тобоковы, Бодуновы, Хакин, Юрганов и другие вносили большой вклад в развитие торговли и ремесел. Улала стала важным торговым центром, связывавшим Алтай с Монголией, Китаем и другими регионами Сибири. В селе действовали десятки ремесленных цехов по обработке металла, ткани, глины и кожи. Регулярно проводились ярмарки, на которые съезжались торговцы из разных мест. Купцы активно занимались благотворительностью, жертвуя средства на строительство храмов, школ и общественных зданий. Большое значение имело открытие телеграфной линии, связавшей Улалу с внешним миром. Некоторые здания сохранились до наших дней и являются памятниками истории.</p>
-      </div>
-      <div class="images-grid">
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/2.1.jpg?raw=true" alt="Винная лавка купца Тобокова" class="modal-image">
-          <div class="image-caption">Винная лавка купца Тобокова</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/2.2.jpg?raw=true" alt="Дом купца Бодунова" class="modal-image">
-          <div class="image-caption">Дом купца Бодунова</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/2.3.jpg?raw=true" alt="Лавка купца Хакина" class="modal-image">
-          <div class="image-caption">Лавка купца Хакина</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modalSoviet" class="period-modal">
-  <div class="modal-bg-wrapper">
-    <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/history.svg" alt="Фон модального окна" class="modal-bg">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h3 class="modal-title">Советский период</h3>
-      <div class="modal-description">
-        <p>После Октябрьской революции 1917 года в Горном Алтае происходили сложные политические процессы, завершившиеся установлением советской власти при поддержке алтайских партизанских отрядов. В 1922 году село Улала стало административным центром Ойротской автономной области. В 1928 году Улала получила статус города, а в 1932 году была переименована в Ойрот-Туру. В 1948 году город получил современное название — Горно-Алтайск. В 1920–1930-е годы активно проводилась политика ликвидации неграмотности, создавались библиотеки, школы, техникумы. В этот же период был основан Ойротский краеведческий музей, ныне музей имени Анохина. В годы Великой Отечественной войны город стал важным пунктом размещения эвакуированного населения, а его предприятия были переориентированы на выпуск продукции для фронта. В послевоенные годы Горно-Алтайск пережил интенсивный промышленный и жилищный рост. Были построены заводы, фабрики, новые жилые кварталы и объекты социальной инфраструктуры.</p>
-      </div>
-      <div class="images-grid">
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/3.1.jpg?raw=true" alt="Кинотеатр Голубой Алтай" class="modal-image">
-          <div class="image-caption">Кинотеатр Голубой Алтай</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/3.2.jpg?raw=true" alt="Дом Культуры" class="modal-image">
-          <div class="image-caption">Дом Культуры</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/3.3.jpg?raw=true" alt="Кинотеатр имени М. Горького" class="modal-image">
-          <div class="image-caption">Кинотеатр имени М. Горького</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modalModern" class="period-modal">
-  <div class="modal-bg-wrapper">
-    <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/history.svg" alt="Фон модального окна" class="modal-bg">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h3 class="modal-title">Современный город</h3>
-      <div class="modal-description">
-        <p>В 1992 году Горно-Алтайск получил статус столицы Республики Алтай. В 1990-е годы город столкнулся с кризисом, связанным с закрытием промышленных предприятий, однако в дальнейшем начался постепенный рост. В настоящее время Горно-Алтайск является административным, культурным, образовательным и туристическим центром региона. Экономика города основана на сфере услуг, торговле, строительстве, переработке древесины и пищевой продукции, а также на развитии туризма. Город выполняет функции важного транспортно-логистического узла, обеспечивая связь с регионами Сибири. Численность населения составляет около 64 тысяч человек и характеризуется устойчивым ростом. Этнический состав многообразен, что способствует формированию поликультурного пространства. Горно-Алтайск отличается благоприятной экологической обстановкой и высоким уровнем озеленения. Современный этап характеризуется комплексным развитием городской инфраструктуры и повышением качества жизни населения.</p>
-      </div>
-      <div class="images-grid">
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/4.1.jpg?raw=true" alt="Национальный драматический театр имени П.В. Кучияка" class="modal-image">
-          <div class="image-caption">Национальный драматический театр имени П.В. Кучияка</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/4.2.jpg?raw=true" alt="Национальный музей имени А. В. Анохина" class="modal-image">
-          <div class="image-caption">Национальный музей имени А. В. Анохина</div>
-        </div>
-        <div class="image-item">
-          <img src="https://github.com/ekrss04/Data-/blob/main/visual/photo/4.3.jpg?raw=true" alt="Прокуратура Республики Алтай" class="modal-image">
-          <div class="image-caption">Прокуратура Республики Алтай</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ВСПЛЫВАЮЩИЕ ОКНА ДЛЯ ЗДАНИЙ -->
-<div id="buildingPopup" class="popup-container building-popup">
-  <div class="popup-bg-wrapper">
-    <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/popup_2.svg" 
-         alt="Фон всплывающего окна" 
-         class="popup-bg">
+    <!-- КАРТА -->
+    <section>
+        <h2 class="archive-title"><span>4D карта Горно-Алтайска</span></h2>
+        <iframe src="kepler.gl.html" title="Интерактивная карта Горно-Алтайска"></iframe>
+    </section>
     
-    <div class="popup-content">
-      <span class="popup-close">&times;</span>
-      <h3 id="buildingTitle" class="popup-title"></h3>
-      <div id="buildingDescription" class="popup-description"></div>
-    </div>
-  </div>
-</div>
+    <!-- НОВЫЙ БЛОК: ДОСТОПРИМЕЧАТЕЛЬНОСТИ -->
+    <section class="attractions-section">
+        <h2 class="archive-title"><span>Достопримечательности Горно-Алтайска</span></h2>
+        
+        <div class="attractions-grid" id="attractionsGrid">
+            <!-- Карточки будут созданы через JavaScript -->
+        </div>
+    </section>
+   
+    <!-- АРХИВНЫЕ ФОТОГРАФИИ -->
+    <section>
+        <h2 class="archive-title"><span>Архивные фотографии</span></h2>
+        
+        <div class="category-buttons">
+            <button class="category-btn active" onclick="filterPhotos('all')">Все фото</button>
+            <button class="category-btn" onclick="filterPhotos('Улала')">Улала</button>
+            <button class="category-btn" onclick="filterPhotos('Ойрот-Тура')">Ойрот-Тура</button>
+            <button class="category-btn" onclick="filterPhotos('Горно-Алтайск')">Горно-Алтайск</button>
+        </div>
+        
+        <div class="gallery" id="photoGallery">
+            <!-- Фотографии загружаются через JavaScript -->
+        </div>
+    </section>
 
-<!-- ВСПЛЫВАЮЩЕЕ ОКНО ДЛЯ МОДЕЛЕЙ -->
-<div id="modelPopup" class="popup-container model-popup">
-  <div class="popup-bg-wrapper">
-    <img src="https://raw.githubusercontent.com/ekrss04/Data-/main/visual/popup_1.svg" 
-         alt="Фон всплывающего окна" 
-         class="popup-bg">
-    
-    <div class="popup-content">
-      <span class="popup-close">&times;</span>
-      <h3 id="modelTitle" class="popup-title"></h3>
-      <div id="modelDescription" class="popup-description"></div>
-      <div id="modelImageContainer" class="popup-image-container">
-        <img id="modelImage" src="" alt="" class="popup-image">
-      </div>
-    </div>
-  </div>
-</div>
-    <script src='https://cdn.jsdelivr.net/npm/cesium@1.115.0/Build/Cesium/Cesium.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/cesium@1.115.0/Build/Cesium/Widgets/widgets.js'></script><script  src="./script.js"></script>
+    <!-- ФУТЕР -->
+    <footer style="background-color: rgb(255, 255, 255); padding: 30px 20px; text-align: center; font-size: 16px; color: #333;">
+        <h2 class="archive-title"><span>Дополнительная информация</span></h2>
+        <p>Вы можете связаться с нами по следующей электронной почте:</p>
+        <p style="font-weight: bold; font-size: 16px; color: rgb(41, 19, 120);">Kristina.esipova.2003@mail.ru</p>
+        <p>Есипова Кристина Алексеевна, СГУГиТ</p>
 
-  </body>
-  
+        <div style="margin-top: 40px;">
+            <h3 style="margin-bottom: 10px;">Источники информации</h3>
+            <ul style="list-style: none; padding: 0; font-size: 15px; line-height: 1.8;">
+                <li><a href="https://gornoaltaysk.ru/" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Официальный портал муниципального образования "город Горно-Алтайск"</a></li>
+                <li><a href="https://retromap.ru/14196816_z14_51.940449,85.973596" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Retromap</a></li>
+                <li><a href="https://nspd.gov.ru/map?thematic=PKK&zoom=13.506657226969194&coordinate_x=9567239.876719732&coordinate_y=6792123.834756714&theme_id=1&is_copy_url=true" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">НСПД | Геоинформационный портал</a></li>
+                <li><a href="https://vk.com/away.php?to=https%3A%2F%2Fkepler.gl%2Fdemo%2Fmap%3FmapUrl%3Dhttps%3A%2F%2Fdl.dropboxusercontent.com%2Fscl%2Ffi%2F4y07neztabm4yfm760rl5%2Fkeplergl_w4weq8q.json%3Frlkey%3Drbmbxklyimuc7t3mr0udn15rh%26dl%3D0&utf=1" target="_blank" style="color: rgb(41, 19, 120); text-decoration: none;">Карта на платформе Kepler.gl</a></li>
+            </ul>
+            <p style="margin-top: 30px; font-size: 18px;">Новосибирск, 2025 г.</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для просмотра фотографий -->
+    <div id="modal" class="modal" onclick="closeModal()">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <span class="modal-nav modal-prev" onclick="changeImage(-1, event)">&#10094;</span>
+        <span class="modal-nav modal-next" onclick="changeImage(1, event)">&#10095;</span>
+        <img class="modal-content" id="modalImage" onclick="event.stopPropagation()">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <script>
+        // Функция для преобразования ссылок GitHub в прямые ссылки на изображения
+        function getRawGitHubUrl(url) {
+            if (url.includes('github.com') && url.includes('/blob/')) {
+                return url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+            }
+            return url;
+        }
+
+        // Данные достопримечательностей
+        const attractionsData = {
+            categories: [
+                {
+                    id: 1,
+                    title: "Скверы и парки",
+                    colorClass: "category-1",
+                    items: [
+                        {
+                            name: "Парк Победы",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.1.jpg"
+                        },
+                        {
+                            name: "Центральный сквер",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.2.jpg"
+                        },
+                        {
+                            name: "Городской парк культуры и отдыха",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.3.jpg"
+                        },
+                        {
+                            name: "Сквер камней",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.4.jpg"
+                        },
+                        {
+                            name: "Городской панорамный парк «Гора Туугая»",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.5.jpg"
+                        },
+                        {
+                            name: "Сквер имени Г.И. Чорос-Гуркина",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/1.6.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Памятники",
+                    colorClass: "category-2",
+                    items: [
+                        {
+                            name: "Памятник труженикам тыла и детям Великой Отечественной войны",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.1.jpg"
+                        },
+                        {
+                            name: "Памятник В.И. Ленину",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.2.jpg"
+                        },
+                        {
+                            name: "Памятник Г.И. Чорос-Гуркину",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.3.jpg"
+                        },
+                        {
+                            name: "Памятник В.И. Чаптынову",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.4.jpg"
+                        },
+                        {
+                            name: "Памятник борцам за власть Советов",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.5.jpg"
+                        },
+                        {
+                            name: "Памятник пограничникам всех поколений",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/2.6.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Исторические здания",
+                    colorClass: "category-3",
+                    items: [
+                        {
+                            name: "Купеческий дом Бодунова",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.1.jpg"
+                        },
+                        {
+                            name: "Лавка купца Тобокова",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.2.jpg"
+                        },
+                        {
+                            name: "Мужская церковно-приходская школа",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.3.jpg"
+                        },
+                        {
+                            name: "Магазин купца Хакина",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.4.jpg"
+                        },
+                        {
+                            name: "Усадьба купца Бодунова",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/3.5.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "Родники",
+                    colorClass: "category-4",
+                    items: [
+                        {
+                            name: "Центральный родник",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/4.1.jpg"
+                        },
+                        {
+                            name: "Родник «Ырысту и Аленушка»",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/4.2.jpg"
+                        },
+                        {
+                            name: "Родник на ул. Рабочей",
+                            image: "https://github.com/ekrss04/Gorno-Altaisk-website/blob/main/images/Place/4.3.jpg"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let allPhotos = [];
+        let activeDetail = null;
+        let currentImageIndex = -1;
+        let currentImagesList = [];
+
+        // Функции для модального окна
+        function openModal(imageSrc, caption, imagesList, index) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+            modalCaption.innerHTML = caption;
+            
+            currentImagesList = imagesList || [];
+            currentImageIndex = index !== undefined ? index : 0;
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = "none";
+        }
+
+        function changeImage(direction, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            if (currentImagesList.length === 0) return;
+            
+            currentImageIndex += direction;
+            
+            // Зацикливание
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentImagesList.length - 1;
+            } else if (currentImageIndex >= currentImagesList.length) {
+                currentImageIndex = 0;
+            }
+            
+            const item = currentImagesList[currentImageIndex];
+            const imageSrc = getRawGitHubUrl(item.image || item.image_path);
+            const caption = item.name || item.title || '';
+            
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('modalCaption').innerHTML = caption;
+        }
+
+        // Загрузка данных из JSON для архивных фото
+        async function loadPhotoData() {
+            try {
+                const response = await fetch('data/photos.json');
+                const data = await response.json();
+                allPhotos = data.photos;
+                displayPhotos(allPhotos);
+            } catch (error) {
+                console.error('Ошибка загрузки фотографий:', error);
+                document.getElementById('photoGallery').innerHTML = 
+                    '<p>Не удалось загрузить фотографии. Проверьте подключение к интернету.</p>';
+            }
+        }
+
+        // Создание карточек достопримечательностей
+        function createAttractionCards() {
+            const grid = document.getElementById('attractionsGrid');
+            grid.innerHTML = '';
+
+            attractionsData.categories.forEach(category => {
+                const card = document.createElement('div');
+                card.className = `attraction-card ${category.colorClass}`;
+                card.dataset.categoryId = category.id;
+
+                // Создаем список достопримечательностей
+                let itemsList = '';
+                category.items.forEach((item, index) => {
+                    itemsList += `
+                        <li data-category-id="${category.id}" data-item-index="${index}">
+                            ${item.name}
+                        </li>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <h3>
+                        ${category.title}
+                        <span class="attraction-icon">▼</span>
+                    </h3>
+                    <ul class="attraction-list">
+                        ${itemsList}
+                    </ul>
+                    <div class="attraction-detail" id="detail-${category.id}">
+                        <!-- Детальная информация будет загружена при клике -->
+                    </div>
+                `;
+
+                grid.appendChild(card);
+
+                // Добавляем обработчики для элементов списка
+                const listItems = card.querySelectorAll('.attraction-list li');
+                listItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const categoryId = parseInt(item.dataset.categoryId);
+                        const itemIndex = parseInt(item.dataset.itemIndex);
+                        showAttractionDetail(categoryId, itemIndex);
+                    });
+                });
+
+                // Обработчик для раскрытия/закрытия списка
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.attraction-list li') && !e.target.closest('.close-detail')) {
+                        toggleCategoryList(card);
+                    }
+                });
+            });
+        }
+
+        // Переключение отображения списка категории
+        function toggleCategoryList(card) {
+            const isActive = card.classList.contains('active');
+            
+            // Закрываем все остальные карточки
+            document.querySelectorAll('.attraction-card').forEach(c => {
+                c.classList.remove('active');
+                const detail = c.querySelector('.attraction-detail');
+                if (detail) {
+                    detail.classList.remove('active');
+                    detail.innerHTML = '';
+                }
+            });
+
+            // Открываем/закрываем текущую
+            if (!isActive) {
+                card.classList.add('active');
+            }
+            
+            activeDetail = null;
+        }
+
+        // Показать детальную информацию о достопримечательности
+        function showAttractionDetail(categoryId, itemIndex) {
+            const category = attractionsData.categories.find(c => c.id === categoryId);
+            if (!category || !category.items[itemIndex]) return;
+
+            const item = category.items[itemIndex];
+            
+            // Закрываем предыдущую детальную информацию
+            if (activeDetail) {
+                const prevDetail = document.getElementById(`detail-${activeDetail.categoryId}`);
+                if (prevDetail) {
+                    prevDetail.classList.remove('active');
+                    prevDetail.innerHTML = '';
+                }
+            }
+
+            // Находим карточку категории
+            const card = document.querySelector(`.attraction-card[data-category-id="${categoryId}"]`);
+            if (!card) return;
+
+            // Показываем карточку как активную
+            document.querySelectorAll('.attraction-card').forEach(c => {
+                c.classList.remove('active');
+            });
+            card.classList.add('active');
+
+            // Находим контейнер для деталей
+            const detailContainer = document.getElementById(`detail-${categoryId}`);
+            if (!detailContainer) return;
+
+            // Преобразуем ссылку на изображение для GitHub
+            const imageUrl = getRawGitHubUrl(item.image);
+
+            // Создаем контент для детальной информации (только фото и подпись)
+            detailContainer.innerHTML = `
+                <div class="detail-content">
+                    <img src="${imageUrl}" alt="${item.name}" class="detail-image" 
+                         onerror="this.src='images/default_sight.jpg'"
+                         onclick="openModal('${imageUrl}', '${item.name}', ${JSON.stringify(category.items).replace(/"/g, '&quot;')}, ${itemIndex})">
+                    <div class="detail-caption ${category.colorClass}" onclick="openModal('${imageUrl}', '${item.name}', ${JSON.stringify(category.items).replace(/"/g, '&quot;')}, ${itemIndex})">
+                        ${item.name}
+                    </div>
+                    <button class="close-detail" onclick="closeAttractionDetail(${categoryId})">
+                        Закрыть
+                    </button>
+                </div>
+            `;
+
+            // Показываем с анимацией
+            setTimeout(() => {
+                detailContainer.classList.add('active');
+            }, 10);
+
+            // Сохраняем активную деталь
+            activeDetail = { categoryId, itemIndex };
+
+            // Прокручиваем к детальной информации
+            detailContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Закрыть детальную информацию
+        function closeAttractionDetail(categoryId) {
+            const detailContainer = document.getElementById(`detail-${categoryId}`);
+            if (detailContainer) {
+                detailContainer.classList.remove('active');
+                setTimeout(() => {
+                    detailContainer.innerHTML = '';
+                }, 500);
+            }
+
+            const card = document.querySelector(`.attraction-card[data-category-id="${categoryId}"]`);
+            if (card) {
+                card.classList.remove('active');
+            }
+
+            activeDetail = null;
+        }
+
+        // Отображение фотографий для архивного раздела
+        function displayPhotos(photos) {
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = '';
+            
+            const isMobile = window.innerWidth <= 768;
+            const cardWidth = isMobile ? '95%' : '400px';
+            const imgHeight = isMobile ? '200px' : '250px';
+            
+            photos.forEach((photo, index) => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'photo-card';
+                photoCard.style.width = cardWidth;
+                photoCard.onclick = () => openModal(
+                    getRawGitHubUrl(photo.image_path), 
+                    photo.title, 
+                    photos, 
+                    index
+                );
+                
+                photoCard.innerHTML = `
+                    <img src="${getRawGitHubUrl(photo.image_path)}" 
+                         alt="${photo.title}" 
+                         style="width: 100%; height: ${imgHeight}; object-fit: cover; cursor: pointer;"
+                         loading="lazy">
+                    <p class="photo-title">${photo.title}</p>
+                `;
+                
+                gallery.appendChild(photoCard);
+            });
+        }
+
+        // Фильтрация по категориям для архивных фото
+        function filterPhotos(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                displayPhotos(allPhotos);
+            } else {
+                const filteredPhotos = allPhotos.filter(photo => photo.category === category);
+                displayPhotos(filteredPhotos);
+            }
+        }
+
+        // Закрытие модального окна по клавише Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft') {
+                changeImage(-1, e);
+            } else if (e.key === 'ArrowRight') {
+                changeImage(1, e);
+            }
+        });
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPhotoData();
+            createAttractionCards();
+        });
+    </script>
+</body>
 </html>
